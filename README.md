@@ -1,15 +1,36 @@
-### Hi there ! Welcome to My Repository👋
 
-<!--
-**aialok/aialok** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+# Hi, I'm Alok Gupta! 👋
 
-Here are some ideas to get you started:
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning cpp and webdev
-- 👯 I’m looking to collaborate with amazing coder
-- 💬 Ask me about everything
-- 📫 How to reach me: instagram @ai.alok
-- 😄 Pronouns: he
-- ⚡ Fun fact: sun rise in the east.
--->
+## 🚀 About Me
+Learning to Code.
+
+I am a competitive Programmer.
+
+Learning WebDev.
+
+
+## 🛠 Skills
+Javascript, HTML, CSS...
+
+C/CPP...
+
+
+
+## 🔗 Links
+[![portfolio](https://img.shields.io/badge/my_portfolio-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://aialok.github.io/aialokofficial/)
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/alok-gupta-3292161b3/)
+
+
+
+## Other Common Github Profile Sections
+👩‍💻 I'm currently working on building next epic shit. 
+
+🧠 I'm currently learning...CPP/WEBDEV
+
+💬 I love to talk about...CP
+
+😄 Pronouns...He/Him
+
+⚡️ Fun fact...HTML is not a programming language..Haha.
+
