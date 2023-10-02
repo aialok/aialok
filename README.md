@@ -1,6 +1,9 @@
 <h1 align="center">Hi 👋, I'm Alok Gupta</h1>
 <h3 align="center">A Passionate Web Developer developer from India</h3>
 
+
+<p align="center"> <img src="https://komarev.com/ghpvc/?username=aialok&label=Profile%20views&color=0e75b6&style=flat" alt="aialok" /> </p>
+
 <p align="center">
 <a  align="center">
   <img align="center" src="https://github-readme-stats.vercel.app/api/top-langs/?username=aialok&layout=compact" />
