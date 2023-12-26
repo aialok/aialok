@@ -1,4 +1,3 @@
-# Sample workflow for building and deploying a Jekyll site to GitHub Pages
 name: Deploy Jekyll with GitHub Pages dependencies preinstalled
 
 on:
@@ -35,6 +34,9 @@ jobs:
         with:
           source: ./
           destination: ./_site
+          config_file: ./_config.yml  # Specify the Jekyll configuration file if not default
+      - name: Replace README.md with index.html
+        run: mv ./_site/README.md ./_site/index.html
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
 
