@@ -24,7 +24,7 @@ I'm currently diving deep into the world of GraphQL, exploring its capabilities,
 
 ### 🌐 Let's Connect
 - [LinkedIn](https://www.linkedin.com/in/aialok/)
-- [Twitter](https://twitter.com/your-twitter-handle)
+- [Twitter](https://twitter.com/ai_alok)
 
 ### 📊 GitHub Stats
 ![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=aialok&layout=compact)
