@@ -11,6 +11,7 @@ I'm Alok Gupta, a sophomore at IIIT Ranchi, and a passionate open-source enthusi
 I have hands-on experience with various technologies including:
 
 
+| Technology                | 
 |---------------------------| 
 | JavaScript / TypeScript   | 
 | React / Redux             | 
@@ -20,7 +21,8 @@ I have hands-on experience with various technologies including:
 | MySQL / Sequelize (ORM)   | 
 | Docker / Linux            | 
 | socket.io / Postman       | 
-| Jest / React Testing Library | 
+| Jest / React Testing Library |
+
 
 
 
