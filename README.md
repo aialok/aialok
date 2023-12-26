@@ -14,7 +14,7 @@ I have hands-on experience with various technologies including:
 - MongoDB | Mongoose (ODM)
 - MySQL | Sequelize (ORM)
 - Jest (for unit tests)
-- Docker
+- Docker | Postman | Linux
 
 ### 🚀 Currently Learning
 I'm currently diving deep into the world of GraphQL, exploring its capabilities, and integrating it into my tech stack.
