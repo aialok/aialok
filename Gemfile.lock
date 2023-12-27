@@ -63,7 +63,6 @@ GEM
     rouge (3.30.0)
     safe_yaml (1.0.5)
     sass (3.7.4)
-      listen (~> 3.0)
     webrick (1.8.1)
 
 PLATFORMS
