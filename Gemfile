@@ -28,6 +28,9 @@ end
 platforms :mingw, :x64_mingw, :mswin, :jruby do
   gem "tzinfo", "~> 1.2"
   gem "tzinfo-data"
+  gem 'sass', '3.7.4'
+  gem 'sass-listen', '~> 4.0.0'
+
 end
 
 # Performance-booster for watching directories on Windows
