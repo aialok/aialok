@@ -74,6 +74,8 @@ DEPENDENCIES
   jekyll-feed (~> 0.6)
   kramdown-parser-gfm
   minima!
+  sass (= 3.7.4)
+  sass-listen (~> 4.0.0)
   tzinfo (~> 1.2)
   tzinfo-data
   wdm (~> 0.1.0)
