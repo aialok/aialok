@@ -42,7 +42,6 @@ jobs:
       - name: Installing Bundler and Updating Sass Gem
         run: |
           gem update --system
-          bundle update sass
           gem install bundler
 
       - name: Setup Pages
