@@ -4,7 +4,10 @@
 
 I'm Alok Gupta, a sophomore at IIIT Ranchi, and a passionate open-source enthusiast. I love to gossip about Node.js and thrive on creating big, super-smooth backends and APIs.
 
+[![aialok's GitHub | Stats](https://stats.quine.sh/aialok/github?theme=dark)](https://quine.sh?utm_source=widgets&utm_campaign=aialok)
+
 ![Profile Views](https://komarev.com/ghpvc/?username=aialok&label=Profile%20views&color=0e75b6&style=flat)
+
 
 ### Tech Stack
 
