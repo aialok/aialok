@@ -8,17 +8,17 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { SandpackCSS } from './blog/[slug]/sandpack';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://leerob.io'),
+  metadataBase: new URL('https://aialok.vercel.app/'),
   title: {
     default: 'aialok',
     template: '%s | aialok',
   },
   description: 'Developer, Open Source, and Photographer.',
   openGraph: {
-    title: 'Lee Robinson',
-    description: 'Developer, writer, and creator.',
-    url: 'https://leerob.io',
-    siteName: 'Lee Robinson',
+    title: 'Alok Gupta',
+    description: 'Developer, Open Source Contributor, and Photographer.',
+    url: 'https://aialok.vercel.app/',
+    siteName: 'Alok Gupta',
     locale: 'en_US',
     type: 'website',
   },
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     },
   },
   twitter: {
-    title: 'Lee Robinson',
+    title: 'Alok Gupta',
     card: 'summary_large_image',
   },
   verification: {

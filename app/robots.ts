@@ -5,7 +5,7 @@ export default function robots() {
         userAgent: '*',
       },
     ],
-    sitemap: 'https://leerob.io/sitemap.xml',
-    host: 'https://leerob.io',
+    sitemap: 'https://aialok.vercel.app/sitemap.xml',
+    host: 'https://aialok.vercel.app',
   };
 }
