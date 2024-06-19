@@ -1,0 +1,110 @@
+--- 
+title : 'Building a GitHub App with Node.js'
+publishedAt: '2024-02-01'
+summary: 'A step-by-step guide to building a GitHub App with Node.js and Express.'
+---
+
+In this tutorial, we'll walk through the process of building a GitHub App using Node.js and Express. GitHub Apps are a great way to extend the functionality of GitHub and automate workflows. We'll cover the following topics:
+
+1. Setting up a new GitHub App
+2. Authenticating with GitHub
+3. Handling webhooks
+4. Making authenticated requests to the GitHub API
+
+By the end of this tutorial, you'll have a fully functional GitHub App that can respond to events on GitHub and interact with the GitHub API.
+
+Let's get started!
+
+## Prerequisites
+
+Before we begin, make sure you have the following installed on your machine:
+
+- Node.js
+- npm
+- ngrok (for testing webhooks)
+
+You'll also need a GitHub account and a repository to test your GitHub App with.
+
+## Setting up a new GitHub App
+
+The first step in building a GitHub App is to create a new GitHub App on GitHub. To do this, follow these steps:
+
+1. Go to your GitHub account settings
+2. Click on "Developer settings" in the left sidebar
+3. Click on "GitHub Apps" in the left sidebar
+4. Click on "New GitHub App"
+
+Fill in the required information for your GitHub App, such as the name, description, and homepage URL. You'll also need to generate a private key for your GitHub App, which you'll use to authenticate with GitHub.
+
+Once you've created your GitHub App, take note of the App ID and the private key. You'll need these later when setting up your Node.js application.
+
+## Authenticating with GitHub
+
+To authenticate with GitHub, we'll use the `@octokit/auth-app` package, which provides a simple way to authenticate as a GitHub App. Here's how you can authenticate with GitHub using your GitHub App's private key:
+
+```javascript
+
+const { createAppAuth } = require('@octokit/auth-app');
+
+const auth = createAppAuth({
+  id: APP_ID,
+  privateKey: PRIVATE_KEY,
+});
+
+const { token } = await auth({ type: 'app' });
+
+```
+
+Replace `APP_ID` and `PRIVATE_KEY` with the App ID and private key you generated when creating your GitHub App.
+
+## Handling webhooks
+
+GitHub Apps can listen for events on GitHub using webhooks. To set up a webhook handler in your Node.js application, you can use the `@octokit/webhooks` package. Here's an example of how you can handle a `push` event:
+
+```javascript
+
+const { createWebhooks } = require('@octokit/webhooks');
+
+const webhooks = createWebhooks({
+  secret: WEBHOOK_SECRET,
+});
+
+webhooks.on('push', ({ id, name, payload }) => {
+  console.log(`Received push event for ${name} to ${payload.ref}`);
+});
+
+```
+
+Replace `WEBHOOK_SECRET` with a secret key of your choice. You'll need to configure this secret key in your GitHub App settings.
+
+## Making authenticated requests to the GitHub API
+
+Once you've authenticated with GitHub and set up your webhook handler, you can start making authenticated requests to the GitHub API. You can use the `@octokit/rest` package to interact with the GitHub API. Here's an example of how you can list the repositories for a user:
+
+```javascript
+
+const { Octokit } = require('@octokit/rest');
+
+const octokit = new Octokit({
+  auth: token,
+});
+
+const { data } = await octokit.repos.listForAuthenticatedUser();
+
+console.log(data);
+
+```
+
+Replace `token` with the token you received when authenticating with GitHub.
+
+## Conclusion
+
+In this tutorial, we've covered the basics of building a GitHub App with Node.js and Express. We've looked at how to set up a new GitHub App, authenticate with GitHub, handle webhooks, and make authenticated requests to the GitHub API. With this knowledge, you can start building your own GitHub Apps and automating workflows on GitHub.
+
+I hope you found this tutorial helpful! If you have any questions or feedback, feel free to leave a comment below.
+
+Happy coding! 🚀
+
+
+
+
