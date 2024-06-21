@@ -48,6 +48,10 @@ jobs:
             echo "Unable to determine package manager"
             exit 1
           fi
+
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
           
       - name: Install Dependencies
         run: bun install --frozen-lockfile
