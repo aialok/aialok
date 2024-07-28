@@ -6,20 +6,6 @@ I'm Alok Gupta, a sophomore at IIIT Ranchi, and a passionate open-source enthusi
 ![Profile Views](https://komarev.com/ghpvc/?username=aialok&label=Profile%20views&color=0e75b6&style=flat)
 
 
-### Tech Stack
-I have hands-on experience with various technologies including:
-- JavaScript | TypeScript
-- React | Redux | Tailwind
-- Node.js | Express.js | Socket.io
-- MongoDB | Mongoose (ODM)
-- MySQL | Sequelize (ORM)
-- Jest (for unit tests)
-- Docker | Postman | Linux
-
-### 🚀 Currently Learning
-I'm currently diving deep into the world of GraphQL, exploring its capabilities, and integrating it into my tech stack.
-
-### 💡 Techy Quote
 > "The strength of JavaScript is that you can do anything. The weakness is that you will." - Reg Braithwaite
 
 ### 🌐 Let's Connect
