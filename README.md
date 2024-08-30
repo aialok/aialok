@@ -8,15 +8,15 @@ I'm Alok Gupta, a sophomore at IIIT Ranchi, and a passionate open-source enthusi
 <!--START_SECTION:waka-->
 
 ```txt
-From: 21 August 2024 - To: 28 August 2024
+From: 22 August 2024 - To: 29 August 2024
 
-Total Time: 11 hrs 29 mins
+Total Time: 13 hrs 50 mins
 
-Markdown     7 hrs 17 mins   ███████████████▓░░░░░░░░░   62.98 %
-JavaScript   2 hrs 18 mins   █████░░░░░░░░░░░░░░░░░░░░   20.02 %
-Bash         46 mins         █▓░░░░░░░░░░░░░░░░░░░░░░░   06.77 %
-Text         31 mins         █░░░░░░░░░░░░░░░░░░░░░░░░   04.52 %
-JSON         17 mins         ▓░░░░░░░░░░░░░░░░░░░░░░░░   02.57 %
+Markdown     7 hrs 17 mins   █████████████░░░░░░░░░░░░   52.35 %
+JavaScript   4 hrs 26 mins   ████████░░░░░░░░░░░░░░░░░   31.91 %
+Bash         46 mins         █▒░░░░░░░░░░░░░░░░░░░░░░░   05.63 %
+Text         35 mins         █░░░░░░░░░░░░░░░░░░░░░░░░   04.29 %
+JSON         17 mins         ▓░░░░░░░░░░░░░░░░░░░░░░░░   02.14 %
 ```
 
 <!--END_SECTION:waka-->
