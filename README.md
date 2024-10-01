@@ -1,7 +1,7 @@
 # Hi there! 👋 I'm Alok Gupta
 
 ## About Me
-I'm Alok Gupta, a sophomore at IIIT Ranchi, and a passionate open-source enthusiast. I love to gossip about Node.js and thrive on creating big, super-smooth backends and APIs.
+I’m passionate about building and shipping products that people ❤️ to use. I am always curious about how things really work that drives me to explore and understand various technologies. I’m a huge fan of Ryan Dahl (creator of Node.js) and Dan Abramov (co-author of Redux) and their contributions to open source. It’s amazing how open-source projects can impact millions, if not billions, of people. Right now, I'm contributing to the Google Summer of Code at JSON Schema Org. I’m also part of the JSON Schema organization, where I contribute to various projects.
 
 ![Profile Views](https://komarev.com/ghpvc/?username=aialok&label=Profile%20views&color=0e75b6&style=flat)
 
