@@ -8,15 +8,15 @@ I’m passionate about building and shipping products that people ❤️ to use.
 <!--START_SECTION:waka-->
 
 ```txt
-From: 20 October 2024 - To: 27 October 2024
+From: 21 October 2024 - To: 28 October 2024
 
-Total Time: 13 hrs 34 mins
+Total Time: 9 hrs 40 mins
 
-JavaScript   12 hrs 44 mins  ███████████████████████▒░   93.40 %
-Python       20 mins         ▓░░░░░░░░░░░░░░░░░░░░░░░░   02.53 %
-HTML         14 mins         ▒░░░░░░░░░░░░░░░░░░░░░░░░   01.75 %
-Bash         10 mins         ▒░░░░░░░░░░░░░░░░░░░░░░░░   01.32 %
-Other        3 mins          ░░░░░░░░░░░░░░░░░░░░░░░░░   00.41 %
+JavaScript   9 hrs 1 min     ███████████████████████▒░   93.14 %
+Python       20 mins         █░░░░░░░░░░░░░░░░░░░░░░░░   03.54 %
+HTML         14 mins         ▓░░░░░░░░░░░░░░░░░░░░░░░░   02.46 %
+Markdown     2 mins          ░░░░░░░░░░░░░░░░░░░░░░░░░   00.40 %
+JSON         1 min           ░░░░░░░░░░░░░░░░░░░░░░░░░   00.31 %
 ```
 
 <!--END_SECTION:waka-->
