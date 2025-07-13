@@ -8,15 +8,15 @@ I’m passionate about building and shipping products that people ❤️ to use.
 <!--START_SECTION:waka-->
 
 ```txt
-From: 04 July 2025 - To: 11 July 2025
+From: 05 July 2025 - To: 12 July 2025
 
-Total Time: 9 hrs 28 mins
+Total Time: 8 hrs 19 mins
 
-JavaScript   7 hrs 29 mins   ███████████████████▒░░░░░   77.49 %
-TypeScript   1 hr 29 mins    ████░░░░░░░░░░░░░░░░░░░░░   15.44 %
-JSON         14 mins         ▓░░░░░░░░░░░░░░░░░░░░░░░░   02.48 %
-Other        12 mins         ▓░░░░░░░░░░░░░░░░░░░░░░░░   02.09 %
-Bash         8 mins          ▒░░░░░░░░░░░░░░░░░░░░░░░░   01.51 %
+JavaScript   7 hrs 30 mins   ██████████████████████░░░   88.18 %
+TypeScript   27 mins         █▒░░░░░░░░░░░░░░░░░░░░░░░   05.36 %
+Other        12 mins         ▓░░░░░░░░░░░░░░░░░░░░░░░░   02.38 %
+Bash         8 mins          ▒░░░░░░░░░░░░░░░░░░░░░░░░   01.72 %
+JSON         7 mins          ▒░░░░░░░░░░░░░░░░░░░░░░░░   01.52 %
 ```
 
 <!--END_SECTION:waka-->
