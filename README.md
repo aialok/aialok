@@ -5,17 +5,7 @@ I’m passionate about building and shipping products that people ❤️ to use.
 
 ![Profile Views](https://komarev.com/ghpvc/?username=aialok&label=Profile%20views&color=0e75b6&style=flat)
 
-<!--START_SECTION:waka-->
 
-```txt
-From: 29 September 2025 - To: 06 October 2025
-
-Total Time: 0 secs
-
-No activity tracked
-```
-
-<!--END_SECTION:waka-->
 
 > "The strength of JavaScript is that you can do anything. The weakness is that you will." - Reg Braithwaite
 
