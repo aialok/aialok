@@ -19,7 +19,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 		<main>
 			<!-- Hero Section -->
 			<div class="hero animate">
-				<div class="hero-top">
+				<div class="hero-header-row">
 					<div class="name-wrapper">
 						<!-- SVG Santa Hat -->
 						<svg class="svg-hat" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -30,13 +30,8 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 						</svg>
 						<h1>alok gupta</h1>
 					</div>
-					<p class="quote">“The more I know, I know how little I know.”</p>
-				</div>
-				
-				<div class="hero-meta">
-					<p class="tagline">software engineer <span class="sep">•</span> open source contributor <span class="sep">•</span> photographer</p>
 					
-					<!-- Life Timer -->
+					<!-- Life Timer (Moved to Top Right) -->
 					<div class="life-timer-container">
 						<span class="life-label">On Earth for</span>
 						<div class="timer-value">
@@ -45,6 +40,10 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 						</div>
 					</div>
 				</div>
+				
+				<p class="quote">“The more I know, I know how little I know.”</p>
+				
+				<p class="tagline">software engineer <span class="sep">•</span> open source contributor <span class="sep">•</span> photographer</p>
 			</div>
 
 			<!-- About Section -->
@@ -68,7 +67,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 					<!-- FamPay -->
 					<div class="list-item">
 						<div class="list-header">
-							<span class="list-title">FamPay</span>
+							<a href="https://www.famapp.in/" target="_blank" class="list-title link">FamPay</a>
 							<span class="list-meta">Upcoming</span>
 						</div>
 						<p class="list-role">Software Engineer Intern • Bangalore</p>
@@ -77,7 +76,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 					<!-- Grapevine -->
 					<div class="list-item">
 						<div class="list-header">
-							<span class="list-title">Grapevine Round1 AI</span>
+							<a href="https://www.grapevine.in/home" target="_blank" class="list-title link">Grapevine Round1 AI</a>
 							<span class="list-meta">July 2025 – Nov 2025</span>
 						</div>
 						<p class="list-role">Software Engineer Intern • Onsite Bangalore</p>
@@ -86,7 +85,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 					<!-- TakeUForward -->
 					<div class="list-item">
 						<div class="list-header">
-							<span class="list-title">TakeUForward</span>
+							<a href="https://takeuforward.org/" target="_blank" class="list-title link">TakeUForward</a>
 							<span class="list-meta">Sep 2024 – July 2025</span>
 						</div>
 						<p class="list-role">Software Engineer Intern • Remote</p>
@@ -95,7 +94,7 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 					<!-- GSoC -->
 					<div class="list-item">
 						<div class="list-header">
-							<span class="list-title">Google Summer of Code</span>
+							<a href="https://summerofcode.withgoogle.com/archive/2024/projects/izshFtex" target="_blank" class="list-title link">Google Summer of Code</a>
 							<span class="list-meta">May 2024 - Aug 2024</span>
 						</div>
 						<p class="list-role">Open Source Contributor • JSON Schema (Remote)</p>
@@ -148,6 +147,20 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 							<li>Innovated a custom workflow for <b>Preview Deployments on Forked PRs</b>, overcoming Cloudflare limitations and boosting code review efficiency by 50%.</li>
 							<li>Established a complete end-to-end testing suite using <b>Cypress with Codecov</b>, increasing test coverage and code quality metrics by 75%.</li>
 						</ul>
+					</div>
+				</div>
+			</section>
+
+			<!-- Education Section -->
+			<section class="section animate delay-4">
+				<h2>cool places i learn</h2>
+				<div class="list">
+					<div class="list-item">
+						<div class="list-header">
+							<span class="list-title">Indian Institute Of Information Technology, Ranchi</span>
+							<span class="list-meta">2022 – 2026</span>
+						</div>
+						<p class="list-role">B.Tech in Computer Science and Engineering (DS & AI)</p>
 					</div>
 				</div>
 			</section>
@@ -242,6 +255,13 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 				pointer-events: none; /* Don't interfere with clicks */
 				user-select: none;
 			}
+			.hero-header-row {
+				display: flex;
+				justify-content: space-between;
+				align-items: flex-end; /* Align bottom of Name and Timer */
+				width: 100%;
+				margin-bottom: 0.5rem;
+			}
 			.hero-top {
 				width: 100%;
 			}
@@ -250,11 +270,12 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 				font-style: italic;
 				color: var(--text-muted); /* Darker, more visible */
 				font-size: 1.1rem;
-				font-weight: 400;
-				margin-top: 0.5rem; /* Add breathing room */
+				font-weight: 500; /* Slightly bolder */
+				margin-top: 0.5rem; 
 				margin-bottom: 2rem;
 				max-width: 650px;
 				line-height: 1.4;
+				opacity: 0.9;
 			}
 			.hero-meta {
 				display: flex;
@@ -269,13 +290,14 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 			.tagline .sep {
 				color: var(--accent-red);
 				margin: 0 0.5rem;
-				opacity: 0.6;
+				opacity: 0.8;
 			}
 			.tagline {
 				margin: 0;
-				max-width: 65%; /* Wider to prevent awkward wrapping */
+				max-width: 100%;
+				white-space: nowrap; 
 				line-height: 1.5;
-				padding-bottom: 0.3rem; /* Visual optical alignment with timer numbers */
+				padding-top: 1rem;
 			}
 			.life-timer-container {
 				margin-top: 0;
@@ -283,13 +305,6 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 				flex-direction: column;
 				align-items: flex-end; /* Align right */
 				justify-content: center;
-				gap: 0; /* Tighter spacing */
-			}
-			.life-label {
-				font-family: 'Space Grotesk', sans-serif;
-				font-size: 0.7rem;
-				font-weight: 600;
-				text-transform: uppercase;
 				letter-spacing: 0.15em;
 				color: var(--text-muted);
 				opacity: 1; /* More visible */
