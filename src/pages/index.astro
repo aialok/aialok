@@ -1,18 +1,20 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
-import { Image } from 'astro:assets';
-import fampayLogo from '../assets/fampay_logo.png';
-import grapevineLogo from '../assets/grapevine_logo.png';
-import takeuforwardLogo from '../assets/takeuforward_logo.png';
-import gsocLogo from '../assets/gsoc_logo.png';
+import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import { Image } from "astro:assets";
+import fampayLogo from "../assets/fampay_logo.png";
+import grapevineLogo from "../assets/grapevine_logo.png";
+import takeuforwardLogo from "../assets/takeuforward_logo.png";
+import gsocLogo from "../assets/gsoc_logo.png";
 
 // Fetch GitHub Contributions
 let contributions = [];
 let totalContributions = 0;
 try {
-	const res = await fetch('https://github-contributions-api.jogruber.de/v4/aialok?y=last');
+	const res = await fetch(
+		"https://github-contributions-api.jogruber.de/v4/aialok?y=last",
+	);
 	if (res.ok) {
 		const data = await res.json();
 		contributions = data.contributions || [];
@@ -41,15 +43,35 @@ try {
 				<div class="hero-header-row">
 					<div class="name-wrapper">
 						<!-- SVG Santa Hat -->
-						<svg class="svg-hat" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path d="M20 80C20 80 35 30 70 20C70 20 60 50 80 80" fill="#DC2626" stroke="#DC2626" stroke-width="2"/>
-							<circle cx="85" cy="85" r="10" fill="white"/>
-							<rect x="15" y="80" width="70" height="15" rx="7.5" fill="white"/>
-							<path d="M20 80C35 50 50 35 70 20" stroke="white" stroke-width="2" stroke-opacity="0.2"/>
+						<svg
+							class="svg-hat"
+							viewBox="0 0 100 100"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								d="M20 80C20 80 35 30 70 20C70 20 60 50 80 80"
+								fill="#DC2626"
+								stroke="#DC2626"
+								stroke-width="2"></path>
+							<circle cx="85" cy="85" r="10" fill="white"
+							></circle>
+							<rect
+								x="15"
+								y="80"
+								width="70"
+								height="15"
+								rx="7.5"
+								fill="white"></rect>
+							<path
+								d="M20 80C35 50 50 35 70 20"
+								stroke="white"
+								stroke-width="2"
+								stroke-opacity="0.2"></path>
 						</svg>
 						<h1>alok gupta</h1>
 					</div>
-					
+
 					<!-- Life Timer (Moved to Top Right) -->
 					<div class="life-timer-container">
 						<span class="life-label">On Earth for</span>
@@ -59,51 +81,100 @@ try {
 						</div>
 					</div>
 				</div>
-				
-				<p class="quote">“The more I know, I know how little I know.”</p>
-				
+
+				<p class="quote">
+					“The more I know, I know how little I know.”
+				</p>
+			</div>
+
+			<!-- System Uplink HUD (Above Heatmap) -->
+			<div class="hero-footer animate delay-1">
+				<div class="roles-wrapper">
+					<span>Software Engineer</span>
+					<span class="sep">•</span>
+					<span>Open Source</span>
+					<span class="sep">•</span>
+					<span>CRICKET</span>
+				</div>
+
+				<div class="hud-container">
+					<div class="hud-row top">
+						<div class="hud-group">
+							<span class="status-dot"></span>
+							<span class="hud-label">PING</span>
+							<span id="latency-val" class="hud-mono">--ms</span>
+						</div>
+					</div>
+					<div class="hud-row main">
+						<span id="ip-val" class="hud-mono hud-primary"
+							>SCANNING NETWORK...</span
+						>
+					</div>
+					<div class="hud-row sub">
+						<span class="hud-icon">📍</span>
+						<span id="loc-val" class="hud-mono hud-secondary"
+							>LOCATING...</span
+						>
+					</div>
+				</div>
 			</div>
 
 			<!-- Contribution Graph -->
-			{contributions.length > 0 && (
-				<section class="contribution-section animate delay-1">
-					<div class="contribution-info">
-						<span class="contribution-count">{totalContributions} contributions</span> in the last year
-					</div>
-					<div class="graph-scroll-container">
-						<div class="graph-grid">
-							{contributions.map((day) => (
-								<div 
-									class="contribution-cell" 
-									data-level={day.level}
-									title={`${day.count} contributions on ${day.date}`}
-								></div>
-							))}
+			{
+				contributions.length > 0 && (
+					<section class="contribution-section animate delay-1">
+						<div class="contribution-info">
+							<span class="contribution-count">
+								{totalContributions} contributions
+							</span>{" "}
+							in the last year
 						</div>
-					</div>
-				</section>
-			)}
+						<div class="graph-scroll-container">
+							<div class="graph-grid">
+								{contributions.map((day) => (
+									<div
+										class="contribution-cell"
+										data-level={day.level}
+										title={`${day.count} contributions on ${day.date}`}
+									/>
+								))}
+							</div>
+						</div>
+					</section>
+				)
+			}
 
 			<!-- About Section -->
 			<section class="section animate delay-1">
 				<h2>about</h2>
-			<p>
-				I am <b>Alok Gupta</b>, a backend-focused software engineer who enjoys building systems that people actually use. I care deeply about solving real engineering problems and creating software that remains reliable in real-world conditions.
-			</p>
+				<p>
+					I am <b>Alok Gupta</b>, a backend-focused software engineer
+					who enjoys building systems that people actually use. I care
+					deeply about solving real engineering problems and creating
+					software that remains reliable in real-world conditions.
+				</p>
 
-			<p>
-				I have worked across startups and open-source projects, building production systems and taking ownership from idea to deployment. I learn best by doing, by building, breaking, and improving systems through hands-on experience in live environments.
-			</p>
+				<p>
+					I have worked across startups and open-source projects,
+					building production systems and taking ownership from idea
+					to deployment. I learn best by doing, by building, breaking,
+					and improving systems through hands-on experience in live
+					environments.
+				</p>
 
-			<p>
-				My interests lie in <b>backend engineering</b>, <b>distributed systems</b>, and <b>open source</b>. I enjoy thinking about system design, scalability, and long-term maintainability, and I value strong engineering practices, ownership, and reliability.
-			</p>
+				<p>
+					My interests lie in <b>backend engineering</b>, <b
+						>distributed systems</b
+					>, and <b>open source</b>. I enjoy thinking about system
+					design, scalability, and long-term maintainability, and I
+					value strong engineering practices, ownership, and
+					reliability.
+				</p>
 
-			<p>
-				Outside of work, I like capturing moments and nature, playing cricket occasionally, and sleeping most of the time.
-			</p>
-
-
+				<p>
+					Outside of work, I like capturing moments and nature,
+					playing cricket occasionally, and sleeping most of the time.
+				</p>
 			</section>
 
 			<!-- Cool Places I Work (Minimal) -->
@@ -112,37 +183,72 @@ try {
 				<div class="list">
 					<!-- FamPay -->
 					<div class="list-item work-item">
-						<Image src={fampayLogo} alt="FamPay" class="company-logo" />
+						<Image
+							src={fampayLogo}
+							alt="FamPay"
+							class="company-logo"
+						/>
 						<div class="list-details-block">
 							<div class="list-header">
-								<a href="https://www.famapp.in/" target="_blank" class="list-title link">FamPay</a>
+								<a
+									href="https://www.famapp.in/"
+									target="_blank"
+									class="list-title link">FamPay</a
+								>
 								<span class="list-meta">Upcoming</span>
 							</div>
-							<p class="list-role">Software Engineer Intern • Bangalore</p>
+							<p class="list-role">
+								Software Engineer Intern • Bangalore
+							</p>
 						</div>
 					</div>
 
 					<!-- Grapevine -->
 					<div class="list-item work-item">
-						<Image src={grapevineLogo} alt="Grapevine" class="company-logo" />
+						<Image
+							src={grapevineLogo}
+							alt="Grapevine"
+							class="company-logo"
+						/>
 						<div class="list-details-block">
 							<div class="list-header">
-								<a href="https://www.grapevine.in/home" target="_blank" class="list-title link">Grapevine Round1 AI</a>
-								<span class="list-meta">July 2025 – Nov 2025</span>
+								<a
+									href="https://www.grapevine.in/home"
+									target="_blank"
+									class="list-title link"
+									>Grapevine Round1 AI</a
+								>
+								<span class="list-meta"
+									>July 2025 – Nov 2025</span
+								>
 							</div>
-							<p class="list-role">Software Engineer Intern • Bangalore</p>
+							<p class="list-role">
+								Software Engineer Intern • Bangalore
+							</p>
 						</div>
 					</div>
 
 					<!-- TakeUForward -->
 					<div class="list-item work-item">
-						<Image src={takeuforwardLogo} alt="TakeUForward" class="company-logo" />
+						<Image
+							src={takeuforwardLogo}
+							alt="TakeUForward"
+							class="company-logo"
+						/>
 						<div class="list-details-block">
 							<div class="list-header">
-								<a href="https://takeuforward.org/" target="_blank" class="list-title link">TakeUForward</a>
-								<span class="list-meta">Sep 2024 – July 2025</span>
+								<a
+									href="https://takeuforward.org/"
+									target="_blank"
+									class="list-title link">TakeUForward</a
+								>
+								<span class="list-meta"
+									>Sep 2024 – July 2025</span
+								>
 							</div>
-							<p class="list-role">Software Engineer Intern • Remote</p>
+							<p class="list-role">
+								Software Engineer Intern • Remote
+							</p>
 						</div>
 					</div>
 
@@ -151,10 +257,19 @@ try {
 						<Image src={gsocLogo} alt="GSoC" class="company-logo" />
 						<div class="list-details-block">
 							<div class="list-header">
-								<a href="https://summerofcode.withgoogle.com/archive/2024/projects/izshFtex" target="_blank" class="list-title link">Google Summer of Code</a>
-								<span class="list-meta">May 2024 - Aug 2024</span>
+								<a
+									href="https://summerofcode.withgoogle.com/archive/2024/projects/izshFtex"
+									target="_blank"
+									class="list-title link"
+									>Google Summer of Code</a
+								>
+								<span class="list-meta"
+									>May 2024 - Aug 2024</span
+								>
 							</div>
-							<p class="list-role">Open Source Contributor • JSON Schema (Remote)</p>
+							<p class="list-role">
+								Open Source Contributor • JSON Schema (Remote)
+							</p>
 						</div>
 					</div>
 				</div>
@@ -167,43 +282,97 @@ try {
 					<!-- Grapevine Projects -->
 					<div class="list-item">
 						<div class="list-header">
-							<span class="list-title">Reliable Payment & Notification Systems</span>
+							<span class="list-title"
+								>Reliable Payment & Notification Systems</span
+							>
 							<span class="list-meta">Grapevine</span>
 						</div>
-						<p class="list-role">Architecture & High-Scale Systems</p>
+						<p class="list-role">
+							Architecture & High-Scale Systems
+						</p>
 						<ul class="list-bullets">
-							<li>Engineered a robust payment system integrating <b>Razorpay, PhonePe, and Apple Pay</b> within a queue-based architecture to ensure 100% reliable order processing.</li>
-							<li>Built a high-throughput notification platform serving <b>600k+ users</b>, utilizing batching strategies and direct APNs integration to handle massive traffic spikes efficiently.</li>
-							<li>Designed a SQL-based recommendation feed for the Next-Boss feature, optimizing queries to serve relevant content to users in real-time.</li>
+							<li>
+								Engineered a robust payment system integrating <b
+									>Razorpay, PhonePe, and Apple Pay</b
+								> within a queue-based architecture to ensure 100%
+								reliable order processing.
+							</li>
+							<li>
+								Built a high-throughput notification platform
+								serving <b>600k+ users</b>, utilizing batching
+								strategies and direct APNs integration to handle
+								massive traffic spikes efficiently.
+							</li>
+							<li>
+								Designed a SQL-based recommendation feed for the
+								Next-Boss feature, optimizing queries to serve
+								relevant content to users in real-time.
+							</li>
 						</ul>
 					</div>
 
 					<!-- TakeUForward Projects -->
 					<div class="list-item">
 						<div class="list-header">
-							<span class="list-title">Algorithmic Interview Platform</span>
+							<span class="list-title"
+								>Algorithmic Interview Platform</span
+							>
 							<span class="list-meta">TakeUForward</span>
 						</div>
 						<p class="list-role">Full Stack & System Design</p>
 						<ul class="list-bullets">
-							<li>Architected the entire interview platform from scratch (Frontend, Backend, DB), enabling users to read and share interactive interview stories.</li>
-							<li>Developed a custom complex data serializer/deserializer handling <b>1.5 million+ submissions/month</b> for Arrays, Trees, Graphs, and other data structures.</li>
-							<li>Implemented comprehensive API monitoring using <b>Prometheus and Grafana</b> to track P50, P99 latency, and error rates across all microservices.</li>
-							<li>Built a feature that shows exactly which test case failed with input and output details making debugging much faster.</li>
+							<li>
+								Architected the entire interview platform from
+								scratch (Frontend, Backend, DB), enabling users
+								to read and share interactive interview stories.
+							</li>
+							<li>
+								Developed a custom complex data
+								serializer/deserializer handling <b
+									>1.5 million+ submissions/month</b
+								> for Arrays, Trees, Graphs, and other data structures.
+							</li>
+							<li>
+								Implemented comprehensive API monitoring using <b
+									>Prometheus and Grafana</b
+								> to track P50, P99 latency, and error rates across
+								all microservices.
+							</li>
+							<li>
+								Built a feature that shows exactly which test
+								case failed with input and output details making
+								debugging much faster.
+							</li>
 						</ul>
 					</div>
 
 					<!-- GSoC Projects -->
 					<div class="list-item">
 						<div class="list-header">
-							<span class="list-title">CI/CD & Testing Infrastructure</span>
+							<span class="list-title"
+								>CI/CD & Testing Infrastructure</span
+							>
 							<span class="list-meta">JSON Schema (GSoC)</span>
 						</div>
 						<p class="list-role">DevOps & Automation</p>
 						<ul class="list-bullets">
-							<li>Automated the entire deployment pipeline using <b>GitHub Actions</b>, including link checking, build verification, and automated testing.</li>
-							<li>Innovated a custom workflow for <b>Preview Deployments on Forked PRs</b>, overcoming Cloudflare limitations and boosting code review efficiency by 50%.</li>
-							<li>Established a complete end-to-end testing suite using <b>Cypress with Codecov</b>, increasing test coverage and code quality metrics by 75%.</li>
+							<li>
+								Automated the entire deployment pipeline using <b
+									>GitHub Actions</b
+								>, including link checking, build verification,
+								and automated testing.
+							</li>
+							<li>
+								Innovated a custom workflow for <b
+									>Preview Deployments on Forked PRs</b
+								>, overcoming Cloudflare limitations and
+								boosting code review efficiency by 50%.
+							</li>
+							<li>
+								Established a complete end-to-end testing suite
+								using <b>Cypress with Codecov</b>, increasing
+								test coverage and code quality metrics by 75%.
+							</li>
 						</ul>
 					</div>
 				</div>
@@ -215,10 +384,15 @@ try {
 				<div class="list">
 					<div class="list-item">
 						<div class="list-header">
-							<span class="list-title">Indian Institute Of Information Technology, Ranchi</span>
+							<span class="list-title"
+								>Indian Institute Of Information Technology,
+								Ranchi</span
+							>
 							<span class="list-meta">2022 – 2026</span>
 						</div>
-						<p class="list-role">B.Tech in Computer Science and Engineering (DS & AI)</p>
+						<p class="list-role">
+							B.Tech in Computer Science and Engineering (DS & AI)
+						</p>
 					</div>
 				</div>
 			</section>
@@ -229,19 +403,27 @@ try {
 				<div class="skills-grid">
 					<div class="skill-category">
 						<span class="skill-label">Languages</span>
-						<span class="skill-items">JavaScript, TypeScript, Python, C++, SQL</span>
+						<span class="skill-items"
+							>JavaScript, TypeScript, Python, C++, SQL</span
+						>
 					</div>
 					<div class="skill-category">
 						<span class="skill-label">Backend</span>
-						<span class="skill-items">Node.js, Express, Django, GraphQL, REST</span>
+						<span class="skill-items"
+							>Node.js, Express, Django, GraphQL, REST</span
+						>
 					</div>
 					<div class="skill-category">
 						<span class="skill-label">Infrastructure</span>
-						<span class="skill-items">Docker, Redis, AWS, GitHub Actions</span>
+						<span class="skill-items"
+							>Docker, Redis, AWS, GitHub Actions</span
+						>
 					</div>
 					<div class="skill-category">
 						<span class="skill-label">Databases</span>
-						<span class="skill-items">MongoDB, MySQL, PostgreSQL</span>
+						<span class="skill-items"
+							>MongoDB, MySQL, PostgreSQL</span
+						>
 					</div>
 				</div>
 			</section>
@@ -249,11 +431,23 @@ try {
 			<!-- Connect Section -->
 			<section class="section animate delay-4">
 				<h2>connect</h2>
-				<div class="links-grid" style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
-					<a href="https://github.com/aialok" target="_blank">GitHub</a>
-					<a href="https://twitter.com/ai_alok" target="_blank">Twitter</a>
-					<a href="https://www.linkedin.com/in/aialok/" target="_blank">LinkedIn</a>
-					<a href="https://www.instagram.com/ai.alok/" target="_blank">Instagram</a>
+				<div
+					class="links-grid"
+					style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;"
+				>
+					<a href="https://github.com/aialok" target="_blank"
+						>GitHub</a
+					>
+					<a href="https://twitter.com/ai_alok" target="_blank"
+						>Twitter</a
+					>
+					<a
+						href="https://www.linkedin.com/in/aialok/"
+						target="_blank">LinkedIn</a
+					>
+					<a href="https://www.instagram.com/ai.alok/" target="_blank"
+						>Instagram</a
+					>
 				</div>
 			</section>
 
@@ -266,46 +460,144 @@ try {
 
 		<!-- Scripts -->
 		<script>
+			// System Uplink & HUD Logic
+			const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // Letters only as requested
+
+			function scrambleText(element, finalText, duration = 1500) {
+				if (!element) return;
+				let iteration = 0;
+				const interval = 40; // ms per frame
+				const maxIterations = duration / interval;
+
+				const timer = setInterval(() => {
+					element.textContent = finalText
+						.split("")
+						.map((char, index) => {
+							if (
+								index <
+								(iteration / maxIterations) * finalText.length
+							) {
+								return finalText[index];
+							}
+							return CHARS[
+								Math.floor(Math.random() * CHARS.length)
+							];
+						})
+						.join("");
+
+					if (iteration >= maxIterations) {
+						clearInterval(timer);
+						element.textContent = finalText; // Ensure final state is clean
+					}
+					iteration++;
+				}, interval);
+			}
+
+			// Init System Identity (IP & Location) - One time fetch
+			async function initSystemData() {
+				const ipEl = document.getElementById("ip-val");
+				const locEl = document.getElementById("loc-val");
+
+				if (!ipEl || !locEl) return;
+
+				try {
+					// Fetch IPv4 specifically from ipify
+					const ipRes = await fetch(
+						"https://api.ipify.org?format=json",
+					);
+					if (ipRes.ok) {
+						const ipData = await ipRes.json();
+						scrambleText(ipEl, ipData.ip);
+					} else {
+						ipEl.textContent = "OFFLINE";
+					}
+
+					// Fetch location from ipapi
+					const locRes = await fetch("https://ipapi.co/json/");
+					if (locRes.ok) {
+						const locData = await locRes.json();
+						scrambleText(
+							locEl,
+							`${locData.city}, ${locData.country_name}`.toUpperCase(),
+						);
+					} else {
+						locEl.textContent = "UNKNOWN";
+					}
+				} catch (e) {
+					console.error("Identity Scan failed:", e);
+					ipEl.textContent = "OFFLINE";
+					locEl.textContent = "UNKNOWN ORIGIN";
+				}
+			}
+
+			// Continuous Latency Ping - Fetch Head Only
+			async function measureLatency() {
+				const latEl = document.getElementById("latency-val");
+				if (!latEl) return;
+
+				const start = performance.now();
+				try {
+					// Ping local server/CDN edge
+					await fetch("/", { method: "HEAD", cache: "no-store" });
+					const end = performance.now();
+					const latency = Math.round(end - start);
+					latEl.textContent = `${latency}ms`;
+				} catch (e) {
+					latEl.textContent = "--ms";
+				}
+			}
+
+			// Initial execution
+			setTimeout(initSystemData, 1000);
+
+			// Latency loop
+			measureLatency(); // Run once immediately
+			setInterval(measureLatency, 3000); // Update every 3 seconds
+
 			// Life Timer Logic (Decimal Years)
-			const birthDate = new Date('2003-10-15T00:00:00');
-			const timerElement = document.getElementById('life-timer');
+			const birthDate = new Date("2003-10-15T00:00:00");
+			const timerElement = document.getElementById("life-timer");
 
 			function updateLifeTimer() {
 				const now = new Date();
-				const diff = now - birthDate;
+				const diff = now.getTime() - birthDate.getTime();
 				const years = diff / (1000 * 60 * 60 * 24 * 365.25);
-				
-				timerElement.innerText = years.toFixed(9);
+
+				if (timerElement) {
+					timerElement.innerText = years.toFixed(9);
+				}
 				requestAnimationFrame(updateLifeTimer);
 			}
-			
+
 			updateLifeTimer();
 
 			// Snow Script (Preserved)
-			const snowContainer = document.getElementById('snow-container');
+			const snowContainer = document.getElementById("snow-container");
 			function createSnowflake() {
-				const snowflake = document.createElement('div');
-				snowflake.innerHTML = '❄';
-				snowflake.classList.add('snowflake');
-				snowflake.style.left = Math.random() * 100 + 'vw';
-				snowflake.style.fontSize = (Math.random() * 0.6 + 0.8) + 'em';
+				if (!snowContainer) return;
+				const snowflake = document.createElement("div");
+				snowflake.innerHTML = "❄";
+				snowflake.classList.add("snowflake");
+				snowflake.style.left = Math.random() * 100 + "vw";
+				snowflake.style.fontSize = Math.random() * 0.6 + 0.8 + "em";
 				snowflake.style.opacity = Math.random() * 0.4 + 0.4;
-				snowflake.style.animationDuration = (Math.random() * 5 + 3) + 's';
+				snowflake.style.animationDuration = Math.random() * 5 + 3 + "s";
 				snowContainer.appendChild(snowflake);
 				setTimeout(() => snowflake.remove(), 8000);
 			}
 			setInterval(createSnowflake, 200);
-			for(let i=0; i<30; i++) setTimeout(createSnowflake, Math.random() * 1000);
+			for (let i = 0; i < 30; i++)
+				setTimeout(createSnowflake, Math.random() * 1000);
 		</script>
 
 		<style>
 			/* Footer Quote Style */
 			.footer-quote {
 				text-align: center;
-				font-family: 'Space Grotesk', sans-serif;
+				font-family: "Space Grotesk", sans-serif;
 				font-size: 7rem; /* Much larger */
 				font-weight: 700; /* Bolder */
-				color: var(--text-faint); 
+				color: var(--text-faint);
 				opacity: 0.12; /* Slightly more subtle at this size */
 				margin: 4rem 0 2rem 0;
 				line-height: 0.85;
@@ -327,12 +619,12 @@ try {
 				width: 100%;
 			}
 			.quote {
-				font-family: 'Space Grotesk', sans-serif;
+				font-family: "Space Grotesk", sans-serif;
 				font-style: italic;
 				color: var(--text-muted); /* Darker, more visible */
 				font-size: 1.1rem;
 				font-weight: 500; /* Slightly bolder */
-				margin-top: 0.5rem; 
+				margin-top: 0.5rem;
 				margin-bottom: 0.5rem;
 				max-width: 650px;
 				line-height: 1.4;
@@ -345,13 +637,13 @@ try {
 				width: 100%;
 				margin-top: 0;
 				padding-top: 1.5rem;
-				border-top: 1px solid rgba(0,0,0,0.05);
+				border-top: 1px solid rgba(0, 0, 0, 0.05);
 			}
 			/* Local Styles for Timer & Lists */
 			/* Responsive Design & Fluid Typography */
 			@media (max-width: 768px) {
 				.hero {
-					padding-top: 1rem !important; /* Reduce top spacing */
+					padding-top: 0 !important; /* Remove all top spacing */
 				}
 				.hero-header-row {
 					flex-direction: column;
@@ -432,7 +724,7 @@ try {
 			.tagline {
 				margin: 0;
 				max-width: 100%;
-				white-space: nowrap; 
+				white-space: nowrap;
 				line-height: 1.5;
 				padding-top: 1rem;
 			}
@@ -442,11 +734,11 @@ try {
 				flex-direction: column;
 				align-items: flex-end; /* Align right */
 				justify-content: center;
-				gap: 0; 
+				gap: 0;
 				padding-bottom: 0.8rem; /* Optical alignment with H1 baseline */
 			}
 			.life-label {
-				font-family: 'Space Grotesk', sans-serif;
+				font-family: "Space Grotesk", sans-serif;
 				font-size: 0.7rem;
 				font-weight: 600;
 				text-transform: uppercase;
@@ -457,7 +749,7 @@ try {
 				margin-bottom: 0.2rem;
 			}
 			.timer-value {
-				font-family: 'Space Grotesk', monospace;
+				font-family: "Space Grotesk", monospace;
 				font-weight: 400; /* Slightly thicker than 300 */
 				font-size: 1.8rem; /* Large */
 				color: var(--text);
@@ -469,7 +761,7 @@ try {
 				line-height: 1;
 			}
 			.unit {
-				font-family: 'Space Grotesk', sans-serif;
+				font-family: "Space Grotesk", sans-serif;
 				font-size: 1rem;
 				color: var(--text-muted);
 				font-weight: 500;
@@ -500,11 +792,11 @@ try {
 				object-fit: cover;
 				border-radius: 50%;
 				background: var(--surface-2);
-				box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+				box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 				flex-shrink: 0;
 			}
-			.list-item { 
-				margin-bottom: 1.5rem; 
+			.list-item {
+				margin-bottom: 1.5rem;
 			}
 			.work-item {
 				display: flex;
@@ -518,9 +810,9 @@ try {
 				flex-direction: column;
 				gap: 0; /* No implicit gap */
 			}
-			.list-header { 
-				display: flex; 
-				justify-content: space-between; 
+			.list-header {
+				display: flex;
+				justify-content: space-between;
 				align-items: baseline;
 				margin-bottom: 0.2rem; /* Small visual gap */
 				width: 100%;
@@ -536,7 +828,7 @@ try {
 
 			/* Contribution Graph */
 			.contribution-section {
-				margin-bottom: 0.5rem;
+				margin-bottom: 2rem; /* Increased spacing before about section */
 				padding: 0 0.5rem;
 			}
 			.contribution-info {
@@ -552,12 +844,18 @@ try {
 				width: 100%;
 				overflow-x: auto;
 				white-space: nowrap;
-				scrollbar-width: none; 
+				scrollbar-width: none;
 				-ms-overflow-style: none;
-				mask-image: linear-gradient(to right, black 95%, transparent 100%); /* Fade out edge */
+				mask-image: linear-gradient(
+					to right,
+					black 95%,
+					transparent 100%
+				); /* Fade out edge */
 			}
-			.graph-scroll-container::-webkit-scrollbar { display: none; }
-			
+			.graph-scroll-container::-webkit-scrollbar {
+				display: none;
+			}
+
 			.graph-grid {
 				display: grid;
 				grid-template-rows: repeat(7, 10px);
@@ -566,7 +864,7 @@ try {
 				width: max-content;
 				padding-bottom: 5px; /* Space for scroll if needed */
 			}
-			
+
 			.contribution-cell {
 				width: 10px;
 				height: 10px;
@@ -580,10 +878,15 @@ try {
 				transform: scale(1.2);
 				z-index: 10;
 			}
-			
+
 			/* Graph Colors (GitHub Standard) */
 			:root {
-				--graph-0: rgba(255, 255, 255, 0.08); /* Faint grey for dark mode */
+				--graph-0: rgba(
+					255,
+					255,
+					255,
+					0.08
+				); /* Faint grey for dark mode */
 				--graph-1: #2b885aff;
 				--graph-2: #006d32;
 				--graph-3: #26a641;
@@ -599,12 +902,220 @@ try {
 				--cell-border: rgba(138, 141, 145, 0.06);
 			}
 
-			.contribution-cell[data-level="0"] { background-color: var(--graph-0); }
-			.contribution-cell[data-level="1"] { background-color: var(--graph-1); }
-			.contribution-cell[data-level="2"] { background-color: var(--graph-2); }
-			.contribution-cell[data-level="3"] { background-color: var(--graph-3); }
-			.contribution-cell[data-level="4"] { background-color: var(--graph-4); }
+			.contribution-cell[data-level="0"] {
+				background-color: var(--graph-0);
+			}
+			.contribution-cell[data-level="1"] {
+				background-color: var(--graph-1);
+			}
+			.contribution-cell[data-level="2"] {
+				background-color: var(--graph-2);
+			}
+			.contribution-cell[data-level="3"] {
+				background-color: var(--graph-3);
+			}
+			.contribution-cell[data-level="4"] {
+				background-color: var(--graph-4);
+			}
 
+			/* Hero Footer & HUD Styles */
+			.hero-footer {
+				margin-top: 0.75rem; /* Reduced further */
+				margin-bottom: 2rem;
+				display: flex;
+				justify-content: space-between;
+				align-items: flex-end;
+				padding-top: 0;
+			}
+
+			.roles-wrapper {
+				font-family: "Space Grotesk", sans-serif;
+				font-size: 0.85rem;
+				font-weight: 500;
+				color: var(--text-muted);
+				display: flex;
+				gap: 0.8rem;
+				align-items: center;
+				text-transform: uppercase;
+				letter-spacing: 0.1em;
+				opacity: 0.8;
+			}
+			.roles-wrapper .sep {
+				color: var(--accent-red, #dc2626);
+				opacity: 0.4;
+				font-size: 0.8em;
+			}
+
+			/* HUD Container */
+			.hud-container {
+				/* Minimalist - No Background/Border */
+				padding: 0;
+				min-width: auto;
+				font-family: "Space Grotesk", monospace;
+				display: flex;
+				flex-direction: column;
+				align-items: flex-end; /* Right align data */
+				gap: 0.1rem;
+			}
+
+			.hud-row {
+				display: flex;
+				align-items: center;
+				justify-content: flex-end;
+				line-height: 1.2;
+			}
+			.hud-row.top {
+				margin-bottom: 0px;
+			}
+
+			.status-dot {
+				width: 5px;
+				height: 5px;
+				background-color: #22c55e;
+				border-radius: 50%;
+				box-shadow: 0 0 4px rgba(34, 197, 94, 0.4);
+				margin-right: 0.4rem;
+				animation: pulse 2s infinite;
+			}
+
+			.hud-mono {
+				font-family: "Space Grotesk", monospace;
+				font-variant-numeric: tabular-nums;
+			}
+
+			.hud-primary {
+				font-size: 0.9rem;
+				color: var(--text); /* Stronger contrast */
+				font-weight: 600;
+				letter-spacing: 0.05em;
+				max-width: 200px; /* Prevent IPv6 from breaking layout */
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+
+			.hud-secondary {
+				font-size: 0.75rem;
+				color: var(--text-muted);
+				letter-spacing: 0.05em;
+				opacity: 0.7;
+			}
+
+			.hud-icon {
+				font-size: 0.75rem;
+				margin-right: 0.4rem;
+				filter: grayscale(1);
+				opacity: 0.5;
+			}
+
+			#latency-val {
+				font-size: 0.7rem;
+				color: var(--text-muted);
+				opacity: 0.6;
+				letter-spacing: 0.05em;
+			}
+
+			.hud-label {
+				font-size: 0.65rem;
+				letter-spacing: 0.1em;
+				color: var(--text-faint);
+				font-weight: 600;
+				margin-right: 0.3rem;
+				opacity: 0.8;
+			}
+
+			/* Scanline Animation */
+			.hud-container {
+				position: relative;
+				overflow: hidden;
+			}
+			.hud-container::after {
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: linear-gradient(
+					to bottom,
+					transparent 0%,
+					rgba(255, 255, 255, 0.05) 50%,
+					transparent 100%
+				);
+				transform: translateY(-100%);
+				animation: scanline 4s infinite ease-in-out;
+				pointer-events: none;
+			}
+			@keyframes scanline {
+				0% {
+					transform: translateY(-100%);
+				}
+				20% {
+					transform: translateY(100%);
+				}
+				100% {
+					transform: translateY(100%);
+				}
+			}
+
+			/* Responsive HUD */
+			@media (max-width: 768px) {
+				.hero-footer {
+					flex-direction: row;
+					justify-content: center; /* Center the single line */
+					margin-top: 1rem;
+					padding-top: 0;
+					width: 100%;
+				}
+
+				.roles-wrapper {
+					display: none;
+				}
+
+				.hud-container {
+					width: auto;
+					flex-direction: row; /* Single line */
+					flex-wrap: nowrap; /* Force no wrap */
+					justify-content: center;
+					align-items: center;
+					gap: 0; /* Use separators instead */
+					font-size: 0.75rem;
+				}
+
+				.hud-row {
+					margin: 0 !important;
+					width: auto;
+					display: inline-flex;
+					align-items: center;
+				}
+
+				/* Add separators between items */
+				.hud-row::after {
+					content: "|";
+					margin: 0 0.6rem;
+					color: var(--text-faint);
+					opacity: 0.4;
+				}
+				.hud-row:last-child::after {
+					content: none; /* No separator after last item */
+				}
+
+				/* Order: PING | IP | Location */
+				.hud-row.top {
+					order: 1;
+				}
+				.hud-row.main {
+					order: 2;
+				}
+				.hud-row.sub {
+					order: 3;
+				}
+
+				/* Adjust icon spacing */
+				.hud-icon {
+					margin-right: 0.2rem;
+				}
+			}
 		</style>
 	</body>
 </html>

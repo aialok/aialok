@@ -107,6 +107,12 @@ main {
 	z-index: 1;
 }
 
+@media (max-width: 768px) {
+	main {
+		padding-top: 3.3rem;
+	}
+}
+
 /* Typography */
 h1, h2, h3, h4 {
 	font-family: 'Space Grotesk', sans-serif;
