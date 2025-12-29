@@ -185,6 +185,11 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 					<a href="https://www.instagram.com/ai.alok/" target="_blank">Instagram</a>
 				</div>
 			</section>
+
+			<!-- Footer Quote -->
+			<div class="footer-quote animate delay-5">
+				You can just do things
+			</div>
 		</main>
 		<Footer />
 
@@ -223,25 +228,41 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 		</script>
 
 		<style>
+			/* Footer Quote Style */
+			.footer-quote {
+				text-align: center;
+				font-family: 'Space Grotesk', sans-serif;
+				font-size: 7rem; /* Much larger */
+				font-weight: 700; /* Bolder */
+				color: var(--text-faint); 
+				opacity: 0.12; /* Slightly more subtle at this size */
+				margin: 4rem 0 2rem 0;
+				line-height: 0.85;
+				letter-spacing: -0.05em;
+				pointer-events: none; /* Don't interfere with clicks */
+				user-select: none;
+			}
 			.hero-top {
 				width: 100%;
 			}
 			.quote {
 				font-family: 'Space Grotesk', sans-serif;
 				font-style: italic;
-				color: var(--text-faint);
-				font-size: 1rem;
-				margin-top: -0.5rem; /* Tuck under name */
+				color: var(--text-muted); /* Darker, more visible */
+				font-size: 1.1rem;
+				font-weight: 400;
+				margin-top: 0.5rem; /* Add breathing room */
 				margin-bottom: 2rem;
-				max-width: 600px;
+				max-width: 650px;
+				line-height: 1.4;
 			}
 			.hero-meta {
 				display: flex;
 				justify-content: space-between;
-				align-items: flex-end;
+				align-items: flex-end; /* Align baselines */
 				width: 100%;
 				margin-top: 0;
-				padding-top: 2rem;
+				padding-top: 1.5rem;
 				border-top: 1px solid rgba(0,0,0,0.05);
 			}
 			/* Local Styles for Timer & Lists */
@@ -252,8 +273,9 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 			}
 			.tagline {
 				margin: 0;
-				max-width: 50%; /* Tighter width */
+				max-width: 65%; /* Wider to prevent awkward wrapping */
 				line-height: 1.5;
+				padding-bottom: 0.3rem; /* Visual optical alignment with timer numbers */
 			}
 			.life-timer-container {
 				margin-top: 0;
