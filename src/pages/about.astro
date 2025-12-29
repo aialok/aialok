@@ -1,0 +1,47 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`About | ${SITE_TITLE}`} description="About Alok Gupta - Developer, Open Source Contributor" />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>About Me</h1>
+			
+			<p>
+				I'm Alok Gupta — a developer, open source contributor, and photographer based in India.
+			</p>
+			
+			<p>
+				I'm passionate about building and shipping products that people ❤️ to use. 
+				I am always curious about how things really work — that drives me to explore and 
+				understand various technologies.
+			</p>
+			
+			<h2>Current Work</h2>
+			
+			<p>
+				Right now, I'm contributing to the Google Summer of Code at <a href="https://www.postman.com/">Postman</a>. 
+				I'm also part of the <a href="https://www.json-schema.org/">JSON Schema</a> organization, 
+				where I contribute as a maintainer and developer on various projects.
+			</p>
+			
+			<h2>Connect</h2>
+			
+			<ul>
+				<li><a href="https://github.com/aialok">GitHub</a></li>
+				<li><a href="https://twitter.com/ai_alok">Twitter</a></li>
+				<li><a href="https://www.linkedin.com/in/aialok/">LinkedIn</a></li>
+				<li><a href="https://www.instagram.com/ai.alok/">Instagram</a></li>
+			</ul>
+		</main>
+		<Footer />
+	</body>
+</html>

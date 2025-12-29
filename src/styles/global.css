@@ -1,0 +1,259 @@
+/*
+  Epic Minimalist Portfolio - Christmas Final 🎄
+  Space Grotesk, Snow, Northern Lights
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+	/* Colors */
+	--bg: #ffffff;
+	--text: #1a1a1a;
+	--text-muted: #666666;
+	--text-faint: #a3a3a3;
+	--border: #e5e5e5;
+	
+	/* Christmas Accents */
+	--accent-red: #dc2626;
+	--accent-green: #15803d;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: 'Inter', sans-serif;
+	margin: 0;
+	padding: 0;
+	background: var(--bg);
+	color: var(--text);
+	font-size: 15px;
+	line-height: 1.6;
+	min-height: 100vh;
+	-webkit-font-smoothing: antialiased;
+	overflow-x: hidden;
+}
+
+/* Snow */
+.snow-container {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	z-index: 9999;
+	overflow: hidden;
+}
+
+.snowflake {
+  position: absolute;
+  top: -20px;
+  color: #cbd5e1; /* Subtle, crisp snow */
+  font-size: 1.2em;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  to { transform: translateY(110vh) rotate(360deg); }
+}
+
+/* 
+   Northern Lights Background 
+   Shift colors gently behind the content
+*/
+.background-gradient {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+	pointer-events: none;
+	background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+	overflow: hidden;
+}
+
+.aurora {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	filter: blur(80px);
+	opacity: 0.6;
+	background: 
+		radial-gradient(circle at 10% 10%, #ecfccb 0%, transparent 40%), /* Lime/Green glow */
+		radial-gradient(circle at 90% 90%, #ffe4e6 0%, transparent 40%), /* Pink/Red glow */
+		radial-gradient(circle at 50% 50%, #e0f2fe 0%, transparent 50%); /* Ice blue center */
+	animation: auroraShift 15s ease-in-out infinite alternate;
+}
+
+@keyframes auroraShift {
+	0% { transform: scale(1); }
+	100% { transform: scale(1.1); }
+}
+
+main {
+	width: 680px;
+	max-width: calc(100% - 2rem);
+	margin: 0 auto;
+	padding: 6rem 1rem;
+	position: relative;
+	z-index: 1;
+}
+
+/* Typography */
+h1, h2, h3, h4 {
+	font-family: 'Space Grotesk', sans-serif;
+	margin: 0;
+	color: var(--text);
+	letter-spacing: -0.03em;
+}
+
+/* Hero Section */
+.hero {
+	margin-bottom: 6rem;
+	text-align: center;
+}
+
+.name-wrapper {
+	position: relative;
+	display: inline-block;
+}
+
+h1 {
+	font-size: 3.5rem;
+	font-weight: 700;
+	margin-bottom: 0.5rem;
+	line-height: 1.1;
+	letter-spacing: -0.04em;
+}
+
+/* SVG Hat Styling */
+.svg-hat {
+	position: absolute;
+	top: -35px;
+	left: -25px;
+	width: 65px;
+	height: 65px;
+	transform: rotate(-15deg);
+	filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+	z-index: 10;
+	animation: hatBob 4s ease-in-out infinite;
+	pointer-events: none;
+}
+
+@keyframes hatBob {
+	0%, 100% { transform: rotate(-15deg) translateY(0); }
+	50% { transform: rotate(-10deg) translateY(-6px); }
+}
+
+.tagline {
+	font-size: 1.15rem;
+	color: var(--text-muted);
+	margin-bottom: 1.5rem;
+	font-family: 'Space Grotesk', sans-serif;
+}
+
+/* Sections */
+section {
+	margin-bottom: 5rem;
+}
+
+h2 {
+	font-size: 0.95rem;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	color: var(--text-muted);
+	font-weight: 700;
+	margin-bottom: 2rem;
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+}
+
+h2::after {
+	content: '';
+	height: 1px;
+	flex: 1;
+	background: linear-gradient(to right, var(--border), transparent);
+}
+
+/* List Items */
+.list {
+	display: flex;
+	flex-direction: column;
+	gap: 2.5rem;
+}
+
+.list-item {
+	display: block;
+	text-decoration: none;
+	transition: opacity 0.2s;
+}
+
+.list-item:hover {
+	opacity: 0.8;
+}
+
+.list-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	margin-bottom: 0.4rem;
+}
+
+.list-title {
+	font-family: 'Space Grotesk', sans-serif;
+	font-size: 1.25rem;
+	font-weight: 600;
+	color: var(--text);
+}
+
+.list-meta {
+	font-size: 0.9rem;
+	color: var(--accent-red); /* Festive Accent */
+	font-family: 'Space Grotesk', sans-serif;
+	font-weight: 500;
+}
+
+.list-desc {
+	font-size: 1rem;
+	color: var(--text-muted);
+	margin: 0;
+	line-height: 1.6;
+}
+
+/* Skills */
+.skills-grid {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 3rem;
+}
+
+.skill-label {
+	font-family: 'Space Grotesk', sans-serif;
+	font-weight: 700;
+	margin-bottom: 0.75rem;
+	display: block;
+	color: var(--text);
+	font-size: 1rem;
+}
+
+.skill-items {
+	color: var(--text-muted);
+	font-size: 1rem;
+	line-height: 1.7;
+}
+
+/* Footer */
+footer {
+	margin-top: 8rem;
+	padding: 2rem 0;
+	text-align: center;
+	color: var(--text-faint);
+	font-size: 0.85rem;
+}
+
+.animate { animation: fadeInUp 0.8s ease-out forwards; opacity: 0; }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }

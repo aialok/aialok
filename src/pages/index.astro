@@ -1,0 +1,188 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<!-- Northern Lights & Snow -->
+		<div class="background-gradient">
+			<div class="aurora"></div>
+		</div>
+		<div id="snow-container" class="snow-container"></div>
+
+		<main>
+			<!-- Hero Section -->
+			<div class="hero animate">
+				<div class="name-wrapper">
+					<!-- SVG Santa Hat -->
+					<svg class="svg-hat" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M20 80C20 80 35 30 70 20C70 20 60 50 80 80" fill="#DC2626" stroke="#DC2626" stroke-width="2"/>
+						<circle cx="85" cy="85" r="10" fill="white"/>
+						<rect x="15" y="80" width="70" height="15" rx="7.5" fill="white"/>
+						<path d="M20 80C35 50 50 35 70 20" stroke="white" stroke-width="2" stroke-opacity="0.2"/>
+					</svg>
+					<h1>alok gupta</h1>
+				</div>
+				<p class="tagline">developer, open source contributor, and photographer</p>
+				
+				<div style="display: flex; gap: 10px; justify-content: center; align-items: center; margin-top: 1rem;">
+					<div class="status">
+						<span style="width:8px; height:8px; background:#10b981; border-radius:50%; display:inline-block; box-shadow: 0 0 0 2px rgba(16,185,129,0.2);"></span>
+						<span style="font-size: 0.85rem; margin-left: 8px; color:#525252; font-family:'Space Grotesk', sans-serif; font-weight:500;">open to work</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- About Section -->
+			<section class="section animate delay-1">
+				<h2>about</h2>
+				<p>
+					I'm a software engineer passionate about <b>backend development</b> and <b>distributed systems</b>. 
+					I learn by building cool stuff and breaking things (occasionally).
+				</p>
+				<p>
+					Upcoming Intern at <b>FamPay</b>. Previously an intern at <b>Grapevine</b> and <b>TakeUForward</b>. 
+					Contributor at <b>Google Summer of Code</b>.
+				</p>
+			</section>
+
+			<!-- Experience Section -->
+			<section class="section animate delay-2">
+				<h2>cool places i work</h2>
+				<div class="list">
+					<a href="https://www.famapp.in/" target="_blank" class="list-item">
+						<div class="list-header">
+							<span class="list-title">FamPay</span>
+							<span class="list-meta">Upcoming</span>
+						</div>
+						<p class="list-desc">Software Engineer Intern</p>
+					</a>
+					<a href="#" class="list-item">
+						<div class="list-header">
+							<span class="list-title">Grapevine Round1 AI</span>
+							<span class="list-meta">Aug 2025 - Present</span>
+						</div>
+						<p class="list-desc">Software Engineer Intern • Infrastructure & Payments</p>
+					</a>
+					<a href="#" class="list-item">
+						<div class="list-header">
+							<span class="list-title">TakeUForward</span>
+							<span class="list-meta">Sep 2024 - May 2025</span>
+						</div>
+						<p class="list-desc">Software Engineer Intern • System Design & Monitoring</p>
+					</a>
+					<a href="#" class="list-item">
+						<div class="list-header">
+							<span class="list-title">Google Summer of Code</span>
+							<span class="list-meta">May 2024 - Aug 2024</span>
+						</div>
+						<p class="list-desc">Contributor (JSON Schema) • CI/CD & Testing Infrastructure</p>
+					</a>
+				</div>
+			</section>
+
+			<!-- Selected Projects -->
+			<section class="section animate delay-3">
+				<h2>cool things i build at cool places</h2>
+				<div class="list">
+					<a href="#" class="list-item">
+						<div class="list-header">
+							<span class="list-title">JSON Schema Website CI/CD</span>
+							<span class="list-meta">GitHub Actions, Cypress</span>
+						</div>
+						<p class="list-desc">Automated testing and preview deployments, improving code review efficiency by 50%.</p>
+					</a>
+					<a href="#" class="list-item">
+						<div class="list-header">
+							<span class="list-title">Interview Platform</span>
+							<span class="list-meta">Next.js, Node.js, Redis</span>
+						</div>
+						<p class="list-desc">Scalable platform handling 1.5M+ submissions/month with robust test case execution.</p>
+					</a>
+					<a href="#" class="list-item">
+						<div class="list-header">
+							<span class="list-title">Recommendation Engine</span>
+							<span class="list-meta">SQL, Python</span>
+						</div>
+						<p class="list-desc">Feed system for 600k+ users showing relevant content using efficient SQL queries.</p>
+					</a>
+				</div>
+			</section>
+
+			<!-- Skills Section -->
+			<section class="section animate delay-4">
+				<h2>cool things i know</h2>
+				<div class="skills-grid">
+					<div class="skill-category">
+						<span class="skill-label">Languages</span>
+						<span class="skill-items">JavaScript, TypeScript, Python, C++, SQL</span>
+					</div>
+					<div class="skill-category">
+						<span class="skill-label">Backend</span>
+						<span class="skill-items">Node.js, Express, Django, GraphQL, REST</span>
+					</div>
+					<div class="skill-category">
+						<span class="skill-label">Infrastructure</span>
+						<span class="skill-items">Docker, Redis, AWS, GitHub Actions</span>
+					</div>
+					<div class="skill-category">
+						<span class="skill-label">Databases</span>
+						<span class="skill-items">MongoDB, MySQL, PostgreSQL</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- Connect Section -->
+			<section class="section animate delay-4">
+				<h2>connect</h2>
+				<div class="links-grid" style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
+					<a href="https://github.com/aialok" target="_blank">GitHub</a>
+					<a href="https://twitter.com/ai_alok" target="_blank">Twitter</a>
+					<a href="https://www.linkedin.com/in/aialok/" target="_blank">LinkedIn</a>
+					<a href="https://www.instagram.com/ai.alok/" target="_blank">Instagram</a>
+				</div>
+			</section>
+		</main>
+		<Footer />
+
+		<script>
+			// Snow Script
+			const snowContainer = document.getElementById('snow-container');
+			function createSnowflake() {
+				const snowflake = document.createElement('div');
+				snowflake.innerHTML = '❄';
+				snowflake.classList.add('snowflake');
+				
+				// Randomize properties for natural fall
+				const startLeft = Math.random() * 100; 
+				const duration = Math.random() * 5 + 3; // 3-8s
+				const size = Math.random() * 0.6 + 0.8; // 0.8-1.4em
+				const opacity = Math.random() * 0.4 + 0.4;
+				
+				snowflake.style.left = startLeft + 'vw';
+				snowflake.style.fontSize = size + 'em';
+				snowflake.style.opacity = opacity;
+				snowflake.style.animationDuration = duration + 's';
+				
+				snowContainer.appendChild(snowflake);
+				
+				// Cleanup
+				setTimeout(() => snowflake.remove(), 8000);
+			}
+
+			// Constant snow
+			setInterval(createSnowflake, 200);
+			
+			// Initial burst so it's not empty on load
+			for(let i=0; i<30; i++) {
+				setTimeout(createSnowflake, Math.random() * 1000);
+			}
+		</script>
+	</body>
+</html>
