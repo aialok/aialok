@@ -2,6 +2,11 @@
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { Image } from 'astro:assets';
+import fampayLogo from '../assets/fampay_logo.png';
+import grapevineLogo from '../assets/grapevine_logo.png';
+import takeuforwardLogo from '../assets/takeuforward_logo.png';
+import gsocLogo from '../assets/gsoc_logo.png';
 ---
 
 <!doctype html>
@@ -49,15 +54,23 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 			<!-- About Section -->
 			<section class="section animate delay-1">
 				<h2>about</h2>
-				<p>
-					I am <b>Alok Gupta</b>, a software engineer who enjoys building real-world systems that people actually use. I learn best by taking ownership and <b>building, breaking, and improving</b> systems in production environments.
-				</p>
-				<p>
-					I have worked on critical backend systems at <b>takeUforward</b>, where my work supports over <b>1.5 million submissions per month</b>. I have also built scalable payment and recommendation systems at <b>Grapevine</b>, and contributed to open source by improving CI/CD and testing workflows as a <b>Google Summer of Code</b> contributor.
-				</p>
-				<p>
-					I am deeply interested in <b>backend engineering</b>, <b>distributed systems</b>, and <b>open source</b>. Outside of coding, I enjoy observing and capturing <b>people, nature, and everyday moments</b>.
-				</p>
+			<p>
+				I am <b>Alok Gupta</b>, a backend-focused software engineer who enjoys building systems that people actually use. I care deeply about solving real engineering problems and creating software that remains reliable in real-world conditions.
+			</p>
+
+			<p>
+				I have worked across startups and open-source projects, building production systems and taking ownership from idea to deployment. I learn best by doing, by building, breaking, and improving systems through hands-on experience in live environments.
+			</p>
+
+			<p>
+				My interests lie in <b>backend engineering</b>, <b>distributed systems</b>, and <b>open source</b>. I enjoy thinking about system design, scalability, and long-term maintainability, and I value strong engineering practices, ownership, and reliability.
+			</p>
+
+			<p>
+				Outside of work, I like capturing moments and nature, playing cricket occasionally, and sleeping most of the time.
+			</p>
+
+
 			</section>
 
 			<!-- Cool Places I Work (Minimal) -->
@@ -65,39 +78,51 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 				<h2>cool places i work</h2>
 				<div class="list">
 					<!-- FamPay -->
-					<div class="list-item">
-						<div class="list-header">
-							<a href="https://www.famapp.in/" target="_blank" class="list-title link">FamPay</a>
-							<span class="list-meta">Upcoming</span>
+					<div class="list-item work-item">
+						<Image src={fampayLogo} alt="FamPay" class="company-logo" />
+						<div class="list-details-block">
+							<div class="list-header">
+								<a href="https://www.famapp.in/" target="_blank" class="list-title link">FamPay</a>
+								<span class="list-meta">Upcoming</span>
+							</div>
+							<p class="list-role">Software Engineer Intern • Bangalore</p>
 						</div>
-						<p class="list-role">Software Engineer Intern • Bangalore</p>
 					</div>
 
 					<!-- Grapevine -->
-					<div class="list-item">
-						<div class="list-header">
-							<a href="https://www.grapevine.in/home" target="_blank" class="list-title link">Grapevine Round1 AI</a>
-							<span class="list-meta">July 2025 – Nov 2025</span>
+					<div class="list-item work-item">
+						<Image src={grapevineLogo} alt="Grapevine" class="company-logo" />
+						<div class="list-details-block">
+							<div class="list-header">
+								<a href="https://www.grapevine.in/home" target="_blank" class="list-title link">Grapevine Round1 AI</a>
+								<span class="list-meta">July 2025 – Nov 2025</span>
+							</div>
+							<p class="list-role">Software Engineer Intern • Onsite Bangalore</p>
 						</div>
-						<p class="list-role">Software Engineer Intern • Onsite Bangalore</p>
 					</div>
 
 					<!-- TakeUForward -->
-					<div class="list-item">
-						<div class="list-header">
-							<a href="https://takeuforward.org/" target="_blank" class="list-title link">TakeUForward</a>
-							<span class="list-meta">Sep 2024 – July 2025</span>
+					<div class="list-item work-item">
+						<Image src={takeuforwardLogo} alt="TakeUForward" class="company-logo" />
+						<div class="list-details-block">
+							<div class="list-header">
+								<a href="https://takeuforward.org/" target="_blank" class="list-title link">TakeUForward</a>
+								<span class="list-meta">Sep 2024 – July 2025</span>
+							</div>
+							<p class="list-role">Software Engineer Intern • Remote</p>
 						</div>
-						<p class="list-role">Software Engineer Intern • Remote</p>
 					</div>
 
 					<!-- GSoC -->
-					<div class="list-item">
-						<div class="list-header">
-							<a href="https://summerofcode.withgoogle.com/archive/2024/projects/izshFtex" target="_blank" class="list-title link">Google Summer of Code</a>
-							<span class="list-meta">May 2024 - Aug 2024</span>
+					<div class="list-item work-item">
+						<Image src={gsocLogo} alt="GSoC" class="company-logo" />
+						<div class="list-details-block">
+							<div class="list-header">
+								<a href="https://summerofcode.withgoogle.com/archive/2024/projects/izshFtex" target="_blank" class="list-title link">Google Summer of Code</a>
+								<span class="list-meta">May 2024 - Aug 2024</span>
+							</div>
+							<p class="list-role">Open Source Contributor • JSON Schema (Remote)</p>
 						</div>
-						<p class="list-role">Open Source Contributor • JSON Schema (Remote)</p>
 					</div>
 				</div>
 			</section>
@@ -287,6 +312,68 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 				border-top: 1px solid rgba(0,0,0,0.05);
 			}
 			/* Local Styles for Timer & Lists */
+			/* Responsive Design & Fluid Typography */
+			@media (max-width: 768px) {
+				.hero {
+					padding-top: 1rem !important; /* Reduce top spacing */
+				}
+				.hero-header-row {
+					flex-direction: column;
+					align-items: flex-start;
+					gap: 1.5rem; /* More breathing room */
+				}
+				h1 {
+					font-size: clamp(2.5rem, 12vw, 4.5rem) !important;
+					line-height: 1.1; /* Prevent cramping */
+					word-break: break-word;
+				}
+				.svg-hat {
+					width: 35px;
+					height: 35px;
+					top: -22px;
+					left: -8px;
+				}
+				.life-timer-container {
+					align-items: flex-start; /* Left align on mobile */
+					width: 100%;
+					margin-top: 0.5rem;
+					padding-bottom: 0;
+					padding-left: 0; /* Strict left alignment */
+				}
+				.life-label {
+					text-align: left;
+					font-size: 0.75rem;
+				}
+				.timer-value {
+					font-size: clamp(1.4rem, 6vw, 1.8rem);
+				}
+				.tagline {
+					white-space: normal !important;
+					overflow-wrap: anywhere;
+					word-break: break-word;
+					max-width: 100%;
+					width: 100%;
+					padding-top: 1rem; /* More space from quote */
+					font-size: clamp(0.9rem, 3vw, 1.1rem);
+					line-height: 1.6; /* Better readability */
+					opacity: 0.85; /* Visual heirarchy */
+				}
+				.footer-quote {
+					font-size: clamp(2rem, 12vw, 5rem);
+					margin: 4rem 0 2rem 0;
+					word-wrap: break-word;
+					opacity: 0.08; /* Subtler on mobile */
+				}
+				.quote {
+					font-size: 1rem;
+					margin-top: 1rem;
+					max-width: 100%;
+				}
+				/* Add breathing room between list items on mobile */
+				.list-item {
+					margin-bottom: 2rem !important;
+				}
+			}
 			.tagline .sep {
 				color: var(--accent-red);
 				margin: 0 0.5rem;
@@ -305,6 +392,14 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 				flex-direction: column;
 				align-items: flex-end; /* Align right */
 				justify-content: center;
+				gap: 0; 
+				padding-bottom: 0.8rem; /* Optical alignment with H1 baseline */
+			}
+			.life-label {
+				font-family: 'Space Grotesk', sans-serif;
+				font-size: 0.7rem;
+				font-weight: 600;
+				text-transform: uppercase;
 				letter-spacing: 0.15em;
 				color: var(--text-muted);
 				opacity: 1; /* More visible */
@@ -332,10 +427,11 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
 			/* Detailed List Styles */
 			.list-role {
-				font-size: 0.9rem;
+				font-size: 0.95rem;
 				color: var(--text-muted);
 				font-weight: 500;
-				margin-bottom: 0.5rem;
+				margin-bottom: 0.5rem; /* Legacy bottom margin for spacing between bullets? */
+				margin-top: 0; /* Force top to 0 */
 			}
 			.list-bullets {
 				margin: 0;
@@ -348,6 +444,46 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 				font-size: 0.95rem;
 				line-height: 1.6;
 			}
+			.company-logo {
+				width: 48px;
+				height: 48px;
+				object-fit: cover;
+				border-radius: 50%;
+				background: var(--surface-2);
+				box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+				flex-shrink: 0;
+			}
+			.list-item { 
+				margin-bottom: 1.5rem; 
+			}
+			.work-item {
+				display: flex;
+				gap: 1rem;
+				align-items: flex-start;
+			}
+			.list-details-block {
+				flex: 1;
+				min-width: 0; /* Prevents flex blowout */
+				display: flex;
+				flex-direction: column;
+				gap: 0; /* No implicit gap */
+			}
+			.list-header { 
+				display: flex; 
+				justify-content: space-between; 
+				align-items: baseline;
+				margin-bottom: 0.2rem; /* Small visual gap */
+				width: 100%;
+				line-height: 1.1;
+			}
+			.list-role {
+				font-size: 0.95rem;
+				color: var(--text-muted);
+				font-weight: 500;
+				margin: 0;
+				line-height: 1.3;
+			}
+
 		</style>
 	</body>
 </html>
