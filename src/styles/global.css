@@ -60,8 +60,8 @@ body {
 }
 
 /* 
-   Northern Lights Background 
-   Shift colors gently behind the content
+   Pinky Winter Mesh 
+   Soft pinks, icy blues, dreamy vibes.
 */
 .background-gradient {
 	position: fixed;
@@ -70,27 +70,32 @@ body {
 	width: 100%;
 	height: 100%;
 	z-index: -1;
-	pointer-events: none;
-	background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-	overflow: hidden;
+	background-color: #fdf2f8; /* Very subtle pink base */
+	background-image: 
+		radial-gradient(at 0% 0%, rgba(255, 228, 230, 0.8) 0px, transparent 50%), /* Soft Rose */
+		radial-gradient(at 100% 0%, rgba(224, 242, 254, 0.8) 0px, transparent 50%), /* Ice Blue */
+		radial-gradient(at 100% 100%, rgba(250, 232, 255, 0.8) 0px, transparent 50%), /* Pale Purple */
+		radial-gradient(at 0% 100%, rgba(254, 242, 242, 0.8) 0px, transparent 50%); /* Rose White */
+	filter: blur(60px);
+	animation: meshMove 15s infinite ease-in-out alternate;
+	opacity: 1;
+}
+
+@keyframes meshMove {
+	0% { background-position: 0% 0%; }
+	100% { background-position: 100% 50%; }
+}
+
+.background-gradient::after {
+	content: none;
+}
+
+.aurora, .aurora::after {
+	display: none;
 }
 
 .aurora {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	filter: blur(80px);
-	opacity: 0.6;
-	background: 
-		radial-gradient(circle at 10% 10%, #ecfccb 0%, transparent 40%), /* Lime/Green glow */
-		radial-gradient(circle at 90% 90%, #ffe4e6 0%, transparent 40%), /* Pink/Red glow */
-		radial-gradient(circle at 50% 50%, #e0f2fe 0%, transparent 50%); /* Ice blue center */
-	animation: auroraShift 15s ease-in-out infinite alternate;
-}
-
-@keyframes auroraShift {
-	0% { transform: scale(1); }
-	100% { transform: scale(1.1); }
+	display: none; /* Remove flashy aurora */
 }
 
 main {
@@ -112,8 +117,14 @@ h1, h2, h3, h4 {
 
 /* Hero Section */
 .hero {
-	margin-bottom: 6rem;
-	text-align: center;
+	padding: 4rem 0;
+	position: relative;
+	width: 100%;
+}
+
+.hero-left {
+	/* Removed as we migrated to hero-top/hero-meta */
+	display: none;
 }
 
 .name-wrapper {
@@ -122,25 +133,26 @@ h1, h2, h3, h4 {
 }
 
 h1 {
-	font-size: 3.5rem;
-	font-weight: 700;
-	margin-bottom: 0.5rem;
-	line-height: 1.1;
+	font-size: 4.5rem;
+	font-weight: 500;
 	letter-spacing: -0.04em;
+	margin-bottom: 0; /* Tighten bottom */
+	color: var(--text);
+	position: relative;
+	line-height: 1.1;
 }
 
-/* SVG Hat Styling */
+/* SVG Hat Positioning */
 .svg-hat {
 	position: absolute;
-	top: -35px;
-	left: -25px;
-	width: 65px;
-	height: 65px;
+	top: -28px;
+	left: -15px;
+	width: 45px;
+	height: 45px;
+	z-index: 10;
 	transform: rotate(-15deg);
 	filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
-	z-index: 10;
-	animation: hatBob 4s ease-in-out infinite;
-	pointer-events: none;
+	animation: hatBob 3s ease-in-out infinite;
 }
 
 @keyframes hatBob {
@@ -149,10 +161,10 @@ h1 {
 }
 
 .tagline {
-	font-size: 1.15rem;
+	/* Tagline is now handled in local styles, removing default margins here */
+	font-size: 1.1rem;
 	color: var(--text-muted);
-	margin-bottom: 1.5rem;
-	font-family: 'Space Grotesk', sans-serif;
+	font-weight: 400;
 }
 
 /* Sections */

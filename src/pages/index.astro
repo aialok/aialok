@@ -19,22 +19,30 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 		<main>
 			<!-- Hero Section -->
 			<div class="hero animate">
-				<div class="name-wrapper">
-					<!-- SVG Santa Hat -->
-					<svg class="svg-hat" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M20 80C20 80 35 30 70 20C70 20 60 50 80 80" fill="#DC2626" stroke="#DC2626" stroke-width="2"/>
-						<circle cx="85" cy="85" r="10" fill="white"/>
-						<rect x="15" y="80" width="70" height="15" rx="7.5" fill="white"/>
-						<path d="M20 80C35 50 50 35 70 20" stroke="white" stroke-width="2" stroke-opacity="0.2"/>
-					</svg>
-					<h1>alok gupta</h1>
+				<div class="hero-top">
+					<div class="name-wrapper">
+						<!-- SVG Santa Hat -->
+						<svg class="svg-hat" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M20 80C20 80 35 30 70 20C70 20 60 50 80 80" fill="#DC2626" stroke="#DC2626" stroke-width="2"/>
+							<circle cx="85" cy="85" r="10" fill="white"/>
+							<rect x="15" y="80" width="70" height="15" rx="7.5" fill="white"/>
+							<path d="M20 80C35 50 50 35 70 20" stroke="white" stroke-width="2" stroke-opacity="0.2"/>
+						</svg>
+						<h1>alok gupta</h1>
+					</div>
+					<p class="quote">“The more I know, I know how little I know.”</p>
 				</div>
-				<p class="tagline">developer, open source contributor, and photographer</p>
 				
-				<div style="display: flex; gap: 10px; justify-content: center; align-items: center; margin-top: 1rem;">
-					<div class="status">
-						<span style="width:8px; height:8px; background:#10b981; border-radius:50%; display:inline-block; box-shadow: 0 0 0 2px rgba(16,185,129,0.2);"></span>
-						<span style="font-size: 0.85rem; margin-left: 8px; color:#525252; font-family:'Space Grotesk', sans-serif; font-weight:500;">open to work</span>
+				<div class="hero-meta">
+					<p class="tagline">software engineer <span class="sep">•</span> open source contributor <span class="sep">•</span> photographer</p>
+					
+					<!-- Life Timer -->
+					<div class="life-timer-container">
+						<span class="life-label">On Earth for</span>
+						<div class="timer-value">
+							<span id="life-timer">Calculating...</span>
+							<span class="unit">y</span>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -43,47 +51,55 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 			<section class="section animate delay-1">
 				<h2>about</h2>
 				<p>
-					I'm a software engineer passionate about <b>backend development</b> and <b>distributed systems</b>. 
-					I learn by building cool stuff and breaking things (occasionally).
+					I am <b>Alok Gupta</b>, a software engineer who enjoys building real-world systems that people actually use. I learn best by taking ownership and <b>building, breaking, and improving</b> systems in production environments.
 				</p>
 				<p>
-					Upcoming Intern at <b>FamPay</b>. Previously an intern at <b>Grapevine</b> and <b>TakeUForward</b>. 
-					Contributor at <b>Google Summer of Code</b>.
+					I have worked on critical backend systems at <b>takeUforward</b>, where my work supports over <b>1.5 million submissions per month</b>. I have also built scalable payment and recommendation systems at <b>Grapevine</b>, and contributed to open source by improving CI/CD and testing workflows as a <b>Google Summer of Code</b> contributor.
+				</p>
+				<p>
+					I am deeply interested in <b>backend engineering</b>, <b>distributed systems</b>, and <b>open source</b>. Outside of coding, I enjoy observing and capturing <b>people, nature, and everyday moments</b>.
 				</p>
 			</section>
 
-			<!-- Experience Section -->
+			<!-- Cool Places I Work (Minimal) -->
 			<section class="section animate delay-2">
 				<h2>cool places i work</h2>
 				<div class="list">
-					<a href="https://www.famapp.in/" target="_blank" class="list-item">
+					<!-- FamPay -->
+					<div class="list-item">
 						<div class="list-header">
 							<span class="list-title">FamPay</span>
 							<span class="list-meta">Upcoming</span>
 						</div>
-						<p class="list-desc">Software Engineer Intern</p>
-					</a>
-					<a href="#" class="list-item">
+						<p class="list-role">Software Engineer Intern • Bangalore</p>
+					</div>
+
+					<!-- Grapevine -->
+					<div class="list-item">
 						<div class="list-header">
 							<span class="list-title">Grapevine Round1 AI</span>
-							<span class="list-meta">Aug 2025 - Present</span>
+							<span class="list-meta">July 2025 – Nov 2025</span>
 						</div>
-						<p class="list-desc">Software Engineer Intern • Infrastructure & Payments</p>
-					</a>
-					<a href="#" class="list-item">
+						<p class="list-role">Software Engineer Intern • Onsite Bangalore</p>
+					</div>
+
+					<!-- TakeUForward -->
+					<div class="list-item">
 						<div class="list-header">
 							<span class="list-title">TakeUForward</span>
-							<span class="list-meta">Sep 2024 - May 2025</span>
+							<span class="list-meta">Sep 2024 – July 2025</span>
 						</div>
-						<p class="list-desc">Software Engineer Intern • System Design & Monitoring</p>
-					</a>
-					<a href="#" class="list-item">
+						<p class="list-role">Software Engineer Intern • Remote</p>
+					</div>
+
+					<!-- GSoC -->
+					<div class="list-item">
 						<div class="list-header">
 							<span class="list-title">Google Summer of Code</span>
 							<span class="list-meta">May 2024 - Aug 2024</span>
 						</div>
-						<p class="list-desc">Contributor (JSON Schema) • CI/CD & Testing Infrastructure</p>
-					</a>
+						<p class="list-role">Open Source Contributor • JSON Schema (Remote)</p>
+					</div>
 				</div>
 			</section>
 
@@ -91,27 +107,48 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 			<section class="section animate delay-3">
 				<h2>cool things i build at cool places</h2>
 				<div class="list">
-					<a href="#" class="list-item">
+					<!-- Grapevine Projects -->
+					<div class="list-item">
 						<div class="list-header">
-							<span class="list-title">JSON Schema Website CI/CD</span>
-							<span class="list-meta">GitHub Actions, Cypress</span>
+							<span class="list-title">Reliable Payment & Notification Systems</span>
+							<span class="list-meta">Grapevine</span>
 						</div>
-						<p class="list-desc">Automated testing and preview deployments, improving code review efficiency by 50%.</p>
-					</a>
-					<a href="#" class="list-item">
+						<p class="list-role">Architecture & High-Scale Systems</p>
+						<ul class="list-bullets">
+							<li>Engineered a robust payment system integrating <b>Razorpay, PhonePe, and Apple Pay</b> within a queue-based architecture to ensure 100% reliable order processing.</li>
+							<li>Built a high-throughput notification platform serving <b>600k+ users</b>, utilizing batching strategies and direct APNs integration to handle massive traffic spikes efficiently.</li>
+							<li>Designed a SQL-based recommendation feed for the Next-Boss feature, optimizing queries to serve relevant content to users in real-time.</li>
+						</ul>
+					</div>
+
+					<!-- TakeUForward Projects -->
+					<div class="list-item">
 						<div class="list-header">
-							<span class="list-title">Interview Platform</span>
-							<span class="list-meta">Next.js, Node.js, Redis</span>
+							<span class="list-title">Algorithmic Interview Platform</span>
+							<span class="list-meta">TakeUForward</span>
 						</div>
-						<p class="list-desc">Scalable platform handling 1.5M+ submissions/month with robust test case execution.</p>
-					</a>
-					<a href="#" class="list-item">
+						<p class="list-role">Full Stack & System Design</p>
+						<ul class="list-bullets">
+							<li>Architected the entire interview platform from scratch (Frontend, Backend, DB), enabling users to read and share interactive interview stories.</li>
+							<li>Developed a custom complex data serializer/deserializer handling <b>1.5 million+ submissions/month</b> for Arrays, Trees, Graphs, and other data structures.</li>
+							<li>Implemented comprehensive API monitoring using <b>Prometheus and Grafana</b> to track P50, P99 latency, and error rates across all microservices.</li>
+							<li>Built a feature that shows exactly which test case failed with input and output details making debugging much faster.</li>
+						</ul>
+					</div>
+
+					<!-- GSoC Projects -->
+					<div class="list-item">
 						<div class="list-header">
-							<span class="list-title">Recommendation Engine</span>
-							<span class="list-meta">SQL, Python</span>
+							<span class="list-title">CI/CD & Testing Infrastructure</span>
+							<span class="list-meta">JSON Schema (GSoC)</span>
 						</div>
-						<p class="list-desc">Feed system for 600k+ users showing relevant content using efficient SQL queries.</p>
-					</a>
+						<p class="list-role">DevOps & Automation</p>
+						<ul class="list-bullets">
+							<li>Automated the entire deployment pipeline using <b>GitHub Actions</b>, including link checking, build verification, and automated testing.</li>
+							<li>Innovated a custom workflow for <b>Preview Deployments on Forked PRs</b>, overcoming Cloudflare limitations and boosting code review efficiency by 50%.</li>
+							<li>Established a complete end-to-end testing suite using <b>Cypress with Codecov</b>, increasing test coverage and code quality metrics by 75%.</li>
+						</ul>
+					</div>
 				</div>
 			</section>
 
@@ -151,38 +188,129 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 		</main>
 		<Footer />
 
+		<!-- Scripts -->
 		<script>
-			// Snow Script
+			// Life Timer Logic (Decimal Years)
+			const birthDate = new Date('2003-10-15T00:00:00');
+			const timerElement = document.getElementById('life-timer');
+
+			function updateLifeTimer() {
+				const now = new Date();
+				const diff = now - birthDate;
+				const years = diff / (1000 * 60 * 60 * 24 * 365.25);
+				
+				timerElement.innerText = years.toFixed(9);
+				requestAnimationFrame(updateLifeTimer);
+			}
+			
+			updateLifeTimer();
+
+			// Snow Script (Preserved)
 			const snowContainer = document.getElementById('snow-container');
 			function createSnowflake() {
 				const snowflake = document.createElement('div');
 				snowflake.innerHTML = '❄';
 				snowflake.classList.add('snowflake');
-				
-				// Randomize properties for natural fall
-				const startLeft = Math.random() * 100; 
-				const duration = Math.random() * 5 + 3; // 3-8s
-				const size = Math.random() * 0.6 + 0.8; // 0.8-1.4em
-				const opacity = Math.random() * 0.4 + 0.4;
-				
-				snowflake.style.left = startLeft + 'vw';
-				snowflake.style.fontSize = size + 'em';
-				snowflake.style.opacity = opacity;
-				snowflake.style.animationDuration = duration + 's';
-				
+				snowflake.style.left = Math.random() * 100 + 'vw';
+				snowflake.style.fontSize = (Math.random() * 0.6 + 0.8) + 'em';
+				snowflake.style.opacity = Math.random() * 0.4 + 0.4;
+				snowflake.style.animationDuration = (Math.random() * 5 + 3) + 's';
 				snowContainer.appendChild(snowflake);
-				
-				// Cleanup
 				setTimeout(() => snowflake.remove(), 8000);
 			}
-
-			// Constant snow
 			setInterval(createSnowflake, 200);
-			
-			// Initial burst so it's not empty on load
-			for(let i=0; i<30; i++) {
-				setTimeout(createSnowflake, Math.random() * 1000);
-			}
+			for(let i=0; i<30; i++) setTimeout(createSnowflake, Math.random() * 1000);
 		</script>
+
+		<style>
+			.hero-top {
+				width: 100%;
+			}
+			.quote {
+				font-family: 'Space Grotesk', sans-serif;
+				font-style: italic;
+				color: var(--text-faint);
+				font-size: 1rem;
+				margin-top: -0.5rem; /* Tuck under name */
+				margin-bottom: 2rem;
+				max-width: 600px;
+			}
+			.hero-meta {
+				display: flex;
+				justify-content: space-between;
+				align-items: flex-end;
+				width: 100%;
+				margin-top: 0;
+				padding-top: 2rem;
+				border-top: 1px solid rgba(0,0,0,0.05);
+			}
+			/* Local Styles for Timer & Lists */
+			.tagline .sep {
+				color: var(--accent-red);
+				margin: 0 0.5rem;
+				opacity: 0.6;
+			}
+			.tagline {
+				margin: 0;
+				max-width: 50%; /* Tighter width */
+				line-height: 1.5;
+			}
+			.life-timer-container {
+				margin-top: 0;
+				display: flex;
+				flex-direction: column;
+				align-items: flex-end; /* Align right */
+				justify-content: center;
+				gap: 0; /* Tighter spacing */
+			}
+			.life-label {
+				font-family: 'Space Grotesk', sans-serif;
+				font-size: 0.7rem;
+				font-weight: 600;
+				text-transform: uppercase;
+				letter-spacing: 0.15em;
+				color: var(--text-muted);
+				opacity: 1; /* More visible */
+				text-align: right;
+				margin-bottom: 0.2rem;
+			}
+			.timer-value {
+				font-family: 'Space Grotesk', monospace;
+				font-weight: 400; /* Slightly thicker than 300 */
+				font-size: 1.8rem; /* Large */
+				color: var(--text);
+				font-variant-numeric: tabular-nums;
+				letter-spacing: -0.04em;
+				display: flex;
+				align-items: baseline;
+				gap: 0.4rem;
+				line-height: 1;
+			}
+			.unit {
+				font-family: 'Space Grotesk', sans-serif;
+				font-size: 1rem;
+				color: var(--text-muted);
+				font-weight: 500;
+			}
+
+			/* Detailed List Styles */
+			.list-role {
+				font-size: 0.9rem;
+				color: var(--text-muted);
+				font-weight: 500;
+				margin-bottom: 0.5rem;
+			}
+			.list-bullets {
+				margin: 0;
+				padding-left: 1.2rem;
+				list-style-type: disc;
+			}
+			.list-bullets li {
+				margin-bottom: 0.5rem;
+				color: var(--text-muted);
+				font-size: 0.95rem;
+				line-height: 1.6;
+			}
+		</style>
 	</body>
 </html>
