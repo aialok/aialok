@@ -220,6 +220,7 @@ h2::after {
 	font-size: 1.25rem;
 	font-weight: 600;
 	color: var(--text);
+	text-decoration: none;
 }
 
 .list-meta {
