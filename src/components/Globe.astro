@@ -1,6 +1,6 @@
 ---
 // Globe Analytics Component
-// Elegant 3D globe with visitor analytics - matches pink/rose theme
+// Hacker-style 3D globe with glowing spikes and detailed hover stats
 ---
 
 <section class="globe-section animate delay-4">
@@ -40,11 +40,43 @@
     .globe-wrapper {
         position: relative;
         width: 100%;
-        max-width: 420px;
+        max-width: 700px;
         aspect-ratio: 1 / 1;
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+
+    /* Soft glow ring behind globe */
+    .globe-wrapper::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 85%;
+        height: 85%;
+        border-radius: 50%;
+        background: radial-gradient(
+            circle,
+            rgba(251, 207, 232, 0.4) 0%,
+            rgba(253, 242, 248, 0.2) 40%,
+            transparent 70%
+        );
+        filter: blur(30px);
+        z-index: 0;
+        animation: glowPulse 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes glowPulse {
+        0% {
+            opacity: 0.6;
+            transform: translate(-50%, -50%) scale(0.95);
+        }
+        100% {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.05);
+        }
     }
 
     #globe-container {
@@ -52,10 +84,19 @@
         height: 100%;
         position: relative;
         z-index: 1;
+        opacity: 0;
+        animation: globeFadeIn 1.2s ease-out 0.3s forwards;
     }
 
-    :global(#globe-container canvas) {
-        /* No extra styling - let the globe be clean */
+    @keyframes globeFadeIn {
+        from {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
     }
 
     .globe-stats {
@@ -92,9 +133,24 @@
         opacity: 0.6;
     }
 
+    /* Custom tooltip styling - Pinky theme */
+    :global(.scene-tooltip) {
+        font-family: "Space Grotesk", monospace !important;
+        background: rgba(253, 242, 248, 0.95) !important;
+        color: #be185d !important;
+        padding: 12px 16px !important;
+        border-radius: 12px !important;
+        border: 1px solid rgba(236, 72, 153, 0.3) !important;
+        font-size: 13px !important;
+        line-height: 1.5 !important;
+        box-shadow: 0 4px 24px rgba(236, 72, 153, 0.2) !important;
+        backdrop-filter: blur(12px) !important;
+        max-width: 280px !important;
+    }
+
     @media (max-width: 768px) {
         .globe-wrapper {
-            max-width: 300px;
+            max-width: 400px;
         }
 
         .globe-stats {
@@ -104,8 +160,12 @@
     }
 </style>
 
-<!-- Load globe.gl from CDN -->
+<!-- Load globe.gl and topojson from CDN -->
 <script is:inline src="//unpkg.com/globe.gl@2.45.0/dist/globe.gl.min.js"
+></script>
+<script
+    is:inline
+    src="//unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js"
 ></script>
 
 <script is:inline>
@@ -120,20 +180,65 @@
         const container = document.getElementById("globe-container");
 
         if (container && typeof Globe !== "undefined") {
+            // Weight color scale - soft pink to vibrant rose gradient
+            function getColor(count) {
+                const intensity = Math.min(1, count / 10);
+                // Pink gradient: light pink (#f9a8d4) to vibrant rose (#ec4899)
+                const r = Math.round(249 - intensity * 13);
+                const g = Math.round(168 - intensity * 96);
+                const b = Math.round(212 - intensity * 59);
+                return "rgb(" + r + "," + g + "," + b + ")";
+            }
+
             const globe = Globe()(container)
-                // Use a clean blue marble texture for elegant look
+                // Clean transparent background
+                .backgroundColor("rgba(0,0,0,0)")
+                // Soft blush atmosphere glow
+                .atmosphereColor("rgba(251, 207, 232, 0.5)")
+                .atmosphereAltitude(0.2)
+                .showAtmosphere(true)
+                // Globe material - soft pink tint for base
                 .globeImageUrl(
                     "//unpkg.com/three-globe/example/img/earth-blue-marble.jpg",
                 )
-                // Fully transparent background - no dark circle
-                .backgroundColor("rgba(0,0,0,0)")
-                // Rose-pink atmosphere to match theme
-                .atmosphereColor("rgba(220, 38, 38, 0.4)")
-                .atmosphereAltitude(0.15)
-                // Show country polygons with subtle pink styling
-                .showGlobe(true)
-                .showAtmosphere(true)
-                // Point configuration
+                .showGlobe(false)
+                // Polygon layer for countries - soft blush pink
+                .polygonCapColor(function () {
+                    return "rgba(244, 114, 182, 0.65)";
+                })
+                .polygonSideColor(function () {
+                    return "rgba(251, 207, 232, 0.4)";
+                })
+                .polygonStrokeColor(function () {
+                    return "rgba(253, 242, 248, 0.8)";
+                })
+                .polygonAltitude(0.005)
+                .polygonsTransitionDuration(400)
+                // Hex layer for subtle geometric mesh
+                .hexPolygonResolution(3)
+                .hexPolygonMargin(0.7)
+                .hexPolygonColor(function () {
+                    return "rgba(253, 242, 248, 0.08)";
+                })
+                .hexPolygonAltitude(0.001)
+                // Rings layer for ripple effect
+                .ringLat(function (d) {
+                    return d.lat;
+                })
+                .ringLng(function (d) {
+                    return d.lng;
+                })
+                .ringColor(function () {
+                    return function (t) {
+                        return "rgba(236, 72, 153, " + (1 - t) * 0.8 + ")";
+                    };
+                })
+                .ringMaxRadius(5)
+                .ringPropagationSpeed(2)
+                .ringRepeatPeriod(800)
+                .ringAltitude(0.008) // Higher than polygons (0.005)
+                .ringsData([])
+                // Points layer (visitor dots)
                 .pointLat(function (d) {
                     return d.lat;
                 })
@@ -141,23 +246,65 @@
                     return d.lng;
                 })
                 .pointRadius(function (d) {
-                    return d.radius;
+                    return d.radius || 0.3;
                 })
                 .pointAltitude(function (d) {
-                    return d.altitude;
+                    return d.altitude || 0.01;
                 })
                 .pointColor(function (d) {
                     return d.color;
                 })
                 .pointLabel(function (d) {
-                    return d.label;
+                    return d.tooltipHtml;
                 })
                 .pointsData([]);
 
+            // Load countries GeoJSON for polygon layer
+            fetch("//unpkg.com/world-atlas@2.0.2/countries-110m.json")
+                .then(function (res) {
+                    return res.json();
+                })
+                .then(function (worldData) {
+                    const countries = topojson.feature(
+                        worldData,
+                        worldData.objects.countries,
+                    ).features;
+                    globe.polygonsData(countries);
+                })
+                .catch(function () {});
+
+            // Generate hex grid data covering the globe
+            const hexData = [];
+            for (let lat = -80; lat <= 80; lat += 10) {
+                for (let lng = -180; lng < 180; lng += 10) {
+                    hexData.push({ lat: lat, lng: lng });
+                }
+            }
+            globe.hexPolygonsData(hexData);
+
             // Globe controls
             globe.controls().autoRotate = true;
-            globe.controls().autoRotateSpeed = 0.4;
+            globe.controls().autoRotateSpeed = 0.3;
             globe.controls().enableZoom = false;
+
+            // Pause rotation on hover for exploration
+            let targetSpeed = 0.3;
+            container.addEventListener("mouseenter", function () {
+                targetSpeed = 0;
+            });
+            container.addEventListener("mouseleave", function () {
+                targetSpeed = 0.3;
+            });
+
+            // Smooth speed transition
+            setInterval(function () {
+                const currentSpeed = globe.controls().autoRotateSpeed;
+                const diff = targetSpeed - currentSpeed;
+                if (Math.abs(diff) > 0.01) {
+                    globe.controls().autoRotateSpeed =
+                        currentSpeed + diff * 0.1;
+                }
+            }, 50);
 
             // Responsive resize
             function resizeGlobe() {
@@ -173,6 +320,46 @@
             let historicalPoints = [];
             const livePoints = [];
 
+            // Generate tooltip HTML with pinky theme
+            function createTooltip(data, isLive) {
+                const status = isLive
+                    ? '<span style="color:#ec4899">● LIVE</span>'
+                    : '<span style="color:#f472b6">● TRACKED</span>';
+                const city = data.city || "Unknown";
+                const country = data.country || "Unknown";
+                const count = data.count || 1;
+                const timestamp = isLive
+                    ? new Date().toISOString()
+                    : "Historical";
+
+                return (
+                    '<div style="text-align:left">' +
+                    '<div style="color:#9ca3af;font-size:10px;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.05em">VISITOR_DATA</div>' +
+                    '<div style="color:#be185d;font-size:14px;font-weight:600">' +
+                    city +
+                    "</div>" +
+                    '<div style="color:#6b7280;font-size:12px;margin-bottom:8px">' +
+                    country +
+                    "</div>" +
+                    '<div style="border-top:1px solid rgba(236,72,153,0.2);padding-top:8px;font-size:11px">' +
+                    '<div style="display:flex;justify-content:space-between;margin-bottom:4px">' +
+                    '<span style="color:#9ca3af">STATUS</span>' +
+                    status +
+                    "</div>" +
+                    '<div style="display:flex;justify-content:space-between;margin-bottom:4px">' +
+                    '<span style="color:#9ca3af">VISITS</span><span style="color:#ec4899">' +
+                    count +
+                    "</span></div>" +
+                    '<div style="display:flex;justify-content:space-between">' +
+                    '<span style="color:#9ca3af">LAT/LNG</span><span style="color:#f472b6">' +
+                    (data.lat ? data.lat.toFixed(2) : "??") +
+                    "°, " +
+                    (data.lng ? data.lng.toFixed(2) : "??") +
+                    "°</span></div>" +
+                    "</div></div>"
+                );
+            }
+
             // Load historical analytics
             fetch(BASE + "/analytics")
                 .then(function (res) {
@@ -182,24 +369,39 @@
                     if (!Array.isArray(data)) return;
 
                     historicalPoints = data.map(function (p) {
+                        const count = p.count || 1;
+                        // Taller spikes for more visits
+                        const altitude = Math.min(0.5, 0.02 + count * 0.03);
+
                         return {
                             lat: Number(p.lat),
                             lng: Number(p.lng),
-                            radius: Math.min(0.5, 0.12 + (p.count || 1) * 0.04),
-                            altitude: 0.01,
-                            // Rose-pink color for historical points
-                            color: "rgba(220, 38, 38, 0.9)",
-                            label:
-                                (p.city || "Unknown") +
-                                ", " +
-                                (p.country || "") +
-                                " • " +
-                                (p.count || 1) +
-                                " visits",
+                            radius: Math.min(0.6, 0.15 + count * 0.05),
+                            altitude: altitude,
+                            color: getColor(count),
+                            city: p.city,
+                            country: p.country,
+                            count: count,
+                            tooltipHtml: createTooltip(
+                                {
+                                    lat: Number(p.lat),
+                                    lng: Number(p.lng),
+                                    city: p.city,
+                                    country: p.country,
+                                    count: count,
+                                },
+                                false,
+                            ),
                         };
                     });
 
                     globe.pointsData(historicalPoints);
+
+                    // Set rings data for ripple effect
+                    const ringsData = historicalPoints.map(function (p) {
+                        return { lat: p.lat, lng: p.lng };
+                    });
+                    globe.ringsData(ringsData);
                 })
                 .catch(function () {});
 
@@ -242,35 +444,71 @@
                             lat: lat,
                             lng: lng,
                             createdAt: Date.now(),
-                            radius: 0.35,
-                            altitude: 0.05,
-                            // Bright orange for live pulses
-                            color: "#ff6b35",
-                            label:
-                                (d.city || "Unknown") +
-                                ", " +
-                                (d.country || "") +
-                                " • LIVE",
+                            radius: 0.5,
+                            altitude: 0.15,
+                            color: "#ec4899",
+                            city: d.city,
+                            country: d.country,
+                            count: 1,
+                            tooltipHtml: createTooltip(
+                                {
+                                    lat: lat,
+                                    lng: lng,
+                                    city: d.city,
+                                    country: d.country,
+                                    count: 1,
+                                },
+                                true,
+                            ),
                         });
+
+                        // Update rings to include new live point
+                        const allPoints = historicalPoints.concat(livePoints);
+                        const ringsData = allPoints.map(function (p) {
+                            return { lat: p.lat, lng: p.lng };
+                        });
+                        globe.ringsData(ringsData);
                     } catch (err) {}
                 };
 
                 ws.onerror = function () {};
             } catch (err) {}
 
-            // Animate live pulses
+            // Animate live pulses - elegant breathing effect
             setInterval(function () {
                 const now = Date.now();
+                let pointsChanged = false;
 
+                // Remove old pulses (after 12 seconds)
                 for (let i = livePoints.length - 1; i >= 0; i--) {
-                    if (now - livePoints[i].createdAt > 6000) {
+                    if (now - livePoints[i].createdAt > 12000) {
                         livePoints.splice(i, 1);
+                        pointsChanged = true;
                     }
                 }
 
+                if (pointsChanged) {
+                    const allPoints = historicalPoints.concat(livePoints);
+                    const ringsData = allPoints.map(function (p) {
+                        return { lat: p.lat, lng: p.lng };
+                    });
+                    globe.ringsData(ringsData);
+                }
+
+                // Elegant breathing pulse for live points
+                livePoints.forEach(function (point) {
+                    const age = now - point.createdAt;
+                    // Smooth sine wave for gentle pulsing
+                    const breathe = Math.sin(age / 400) * 0.5 + 0.5;
+                    // Fade out as point ages
+                    const fadeOut = Math.max(0, 1 - age / 12000);
+                    point.radius = 0.3 + breathe * 0.4 * fadeOut;
+                    point.altitude = 0.08 + breathe * 0.08 * fadeOut;
+                });
+
                 const allPoints = historicalPoints.concat(livePoints);
                 globe.pointsData(allPoints);
-            }, 1000);
+            }, 60);
         }
     });
 </script>
