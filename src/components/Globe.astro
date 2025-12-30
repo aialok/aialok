@@ -1,0 +1,276 @@
+---
+// Globe Analytics Component
+// Elegant 3D globe with visitor analytics - matches pink/rose theme
+---
+
+<section class="globe-section animate delay-4">
+    <div class="globe-wrapper">
+        <div id="globe-container"></div>
+    </div>
+
+    <!-- Stats Display -->
+    <div class="globe-stats">
+        <div class="stat-item">
+            <span id="stat-visits" class="stat-value">--</span>
+            <span class="stat-label">visits</span>
+        </div>
+        <span class="stat-sep">•</span>
+        <div class="stat-item">
+            <span id="stat-locations" class="stat-value">--</span>
+            <span class="stat-label">locations</span>
+        </div>
+        <span class="stat-sep">•</span>
+        <div class="stat-item">
+            <span id="stat-countries" class="stat-value">--</span>
+            <span class="stat-label">countries</span>
+        </div>
+    </div>
+</section>
+
+<style>
+    .globe-section {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 2rem 0;
+        position: relative;
+    }
+
+    .globe-wrapper {
+        position: relative;
+        width: 100%;
+        max-width: 420px;
+        aspect-ratio: 1 / 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #globe-container {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        z-index: 1;
+    }
+
+    :global(#globe-container canvas) {
+        /* No extra styling - let the globe be clean */
+    }
+
+    .globe-stats {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-top: 1.5rem;
+        font-family: "Space Grotesk", monospace;
+        font-size: 0.85rem;
+        color: var(--text-muted, #666);
+        opacity: 0.8;
+    }
+
+    .stat-item {
+        display: flex;
+        align-items: baseline;
+        gap: 0.3rem;
+    }
+
+    .stat-value {
+        font-weight: 600;
+        color: var(--text, #1a1a1a);
+        font-variant-numeric: tabular-nums;
+    }
+
+    .stat-label {
+        font-weight: 400;
+        text-transform: lowercase;
+    }
+
+    .stat-sep {
+        color: var(--accent-red, #dc2626);
+        opacity: 0.6;
+    }
+
+    @media (max-width: 768px) {
+        .globe-wrapper {
+            max-width: 300px;
+        }
+
+        .globe-stats {
+            font-size: 0.75rem;
+            flex-wrap: wrap;
+        }
+    }
+</style>
+
+<!-- Load globe.gl from CDN -->
+<script is:inline src="//unpkg.com/globe.gl@2.45.0/dist/globe.gl.min.js"
+></script>
+
+<script is:inline>
+    document.addEventListener("DOMContentLoaded", function () {
+        const BASE = "https://globe-analytics.alokgupta1560.workers.dev";
+        const WS_URL = "wss://globe-analytics.alokgupta1560.workers.dev/ws";
+
+        // Fire and forget tracking
+        fetch(BASE + "/track").catch(function () {});
+
+        // Create globe
+        const container = document.getElementById("globe-container");
+
+        if (container && typeof Globe !== "undefined") {
+            const globe = Globe()(container)
+                // Use a clean blue marble texture for elegant look
+                .globeImageUrl(
+                    "//unpkg.com/three-globe/example/img/earth-blue-marble.jpg",
+                )
+                // Fully transparent background - no dark circle
+                .backgroundColor("rgba(0,0,0,0)")
+                // Rose-pink atmosphere to match theme
+                .atmosphereColor("rgba(220, 38, 38, 0.4)")
+                .atmosphereAltitude(0.15)
+                // Show country polygons with subtle pink styling
+                .showGlobe(true)
+                .showAtmosphere(true)
+                // Point configuration
+                .pointLat(function (d) {
+                    return d.lat;
+                })
+                .pointLng(function (d) {
+                    return d.lng;
+                })
+                .pointRadius(function (d) {
+                    return d.radius;
+                })
+                .pointAltitude(function (d) {
+                    return d.altitude;
+                })
+                .pointColor(function (d) {
+                    return d.color;
+                })
+                .pointLabel(function (d) {
+                    return d.label;
+                })
+                .pointsData([]);
+
+            // Globe controls
+            globe.controls().autoRotate = true;
+            globe.controls().autoRotateSpeed = 0.4;
+            globe.controls().enableZoom = false;
+
+            // Responsive resize
+            function resizeGlobe() {
+                const rect = container.getBoundingClientRect();
+                globe.width(rect.width);
+                globe.height(rect.height);
+            }
+
+            resizeGlobe();
+            window.addEventListener("resize", resizeGlobe);
+
+            // Store points
+            let historicalPoints = [];
+            const livePoints = [];
+
+            // Load historical analytics
+            fetch(BASE + "/analytics")
+                .then(function (res) {
+                    return res.json();
+                })
+                .then(function (data) {
+                    if (!Array.isArray(data)) return;
+
+                    historicalPoints = data.map(function (p) {
+                        return {
+                            lat: Number(p.lat),
+                            lng: Number(p.lng),
+                            radius: Math.min(0.5, 0.12 + (p.count || 1) * 0.04),
+                            altitude: 0.01,
+                            // Rose-pink color for historical points
+                            color: "rgba(220, 38, 38, 0.9)",
+                            label:
+                                (p.city || "Unknown") +
+                                ", " +
+                                (p.country || "") +
+                                " • " +
+                                (p.count || 1) +
+                                " visits",
+                        };
+                    });
+
+                    globe.pointsData(historicalPoints);
+                })
+                .catch(function () {});
+
+            // Fetch and display stats
+            fetch(BASE + "/stats")
+                .then(function (res) {
+                    return res.json();
+                })
+                .then(function (stats) {
+                    const visitsEl = document.getElementById("stat-visits");
+                    const locationsEl =
+                        document.getElementById("stat-locations");
+                    const countriesEl =
+                        document.getElementById("stat-countries");
+
+                    if (visitsEl)
+                        visitsEl.textContent = stats.total_visits || "--";
+                    if (locationsEl)
+                        locationsEl.textContent =
+                            stats.unique_locations || "--";
+                    if (countriesEl)
+                        countriesEl.textContent = stats.countries || "--";
+                })
+                .catch(function () {});
+
+            // Live visitors via WebSocket
+            try {
+                const ws = new WebSocket(WS_URL);
+
+                ws.onmessage = function (e) {
+                    try {
+                        const d = JSON.parse(e.data);
+                        const lat = Number(d.lat);
+                        const lng = Number(d.lng);
+
+                        if (!Number.isFinite(lat) || !Number.isFinite(lng))
+                            return;
+
+                        livePoints.push({
+                            lat: lat,
+                            lng: lng,
+                            createdAt: Date.now(),
+                            radius: 0.35,
+                            altitude: 0.05,
+                            // Bright orange for live pulses
+                            color: "#ff6b35",
+                            label:
+                                (d.city || "Unknown") +
+                                ", " +
+                                (d.country || "") +
+                                " • LIVE",
+                        });
+                    } catch (err) {}
+                };
+
+                ws.onerror = function () {};
+            } catch (err) {}
+
+            // Animate live pulses
+            setInterval(function () {
+                const now = Date.now();
+
+                for (let i = livePoints.length - 1; i >= 0; i--) {
+                    if (now - livePoints[i].createdAt > 6000) {
+                        livePoints.splice(i, 1);
+                    }
+                }
+
+                const allPoints = historicalPoints.concat(livePoints);
+                globe.pointsData(allPoints);
+            }, 1000);
+        }
+    });
+</script>
