@@ -8,7 +8,24 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
 	site: 'https://example.com',
 	integrations: [mdx(), sitemap()],
+	
+	// Performance optimizations
+	compressHTML: true,
+	
+	build: {
+		// Inline small assets
+		inlineStylesheets: 'auto',
+	},
+	
 	vite: {
+		build: {
+			// Better code splitting
+			cssCodeSplit: true,
+			// Minify output
+			minify: 'esbuild',
+			// Target modern browsers
+			target: 'es2020',
+		},
 		optimizeDeps: {
 			exclude: ['globe.gl']
 		}

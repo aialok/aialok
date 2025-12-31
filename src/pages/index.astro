@@ -462,136 +462,149 @@ try {
 		</main>
 		<Footer />
 
-		<!-- Scripts -->
+		<!-- Scripts - Optimized for performance -->
 		<script>
-			// System Uplink & HUD Logic
-			const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // Letters only as requested
+			// Life Timer Logic - Critical, runs immediately
+			const birthDate = new Date("2003-10-15T00:00:00");
+			const timerElement = document.getElementById("life-timer");
+			let lastTimerUpdate = 0;
 
-			function scrambleText(element, finalText, duration = 1500) {
+			function updateLifeTimer(timestamp) {
+				// Throttle to ~30fps for performance
+				if (timestamp - lastTimerUpdate > 33) {
+					const now = new Date();
+					const diff = now.getTime() - birthDate.getTime();
+					const years = diff / (1000 * 60 * 60 * 24 * 365.25);
+					if (timerElement) {
+						timerElement.innerText = years.toFixed(9);
+					}
+					lastTimerUpdate = timestamp;
+				}
+				requestAnimationFrame(updateLifeTimer);
+			}
+			requestAnimationFrame(updateLifeTimer);
+
+			// Defer non-critical operations
+			function runWhenIdle(fn) {
+				if ("requestIdleCallback" in window) {
+					requestIdleCallback(fn, { timeout: 2000 });
+				} else {
+					setTimeout(fn, 100);
+				}
+			}
+
+			// System Uplink & HUD Logic - Deferred
+			const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+			function scrambleText(element, finalText, duration = 1200) {
 				if (!element) return;
 				let iteration = 0;
-				const interval = 40; // ms per frame
+				const interval = 50; // Slightly slower for perf
 				const maxIterations = duration / interval;
 
 				const timer = setInterval(() => {
 					element.textContent = finalText
 						.split("")
 						.map((char, index) => {
-							if (
-								index <
-								(iteration / maxIterations) * finalText.length
-							) {
+							if (index < (iteration / maxIterations) * finalText.length) {
 								return finalText[index];
 							}
-							return CHARS[
-								Math.floor(Math.random() * CHARS.length)
-							];
+							return CHARS[Math.floor(Math.random() * CHARS.length)];
 						})
 						.join("");
 
 					if (iteration >= maxIterations) {
 						clearInterval(timer);
-						element.textContent = finalText; // Ensure final state is clean
+						element.textContent = finalText;
 					}
 					iteration++;
 				}, interval);
 			}
 
-			// Init System Identity (IP & Location) - One time fetch
+			// Init System Identity - Deferred and parallel fetches
 			async function initSystemData() {
 				const ipEl = document.getElementById("ip-val");
 				const locEl = document.getElementById("loc-val");
 
 				if (!ipEl || !locEl) return;
 
-				try {
-					// Fetch IPv4 specifically from ipify
-					const ipRes = await fetch(
-						"https://api.ipify.org?format=json",
-					);
-					if (ipRes.ok) {
-						const ipData = await ipRes.json();
-						scrambleText(ipEl, ipData.ip);
-					} else {
-						ipEl.textContent = "OFFLINE";
-					}
+				// Parallel fetches for better performance
+				const [ipResult, locResult] = await Promise.allSettled([
+					fetch("https://api.ipify.org?format=json").then(r => r.ok ? r.json() : null),
+					fetch("https://ipapi.co/json/").then(r => r.ok ? r.json() : null)
+				]);
 
-					// Fetch location from ipapi
-					const locRes = await fetch("https://ipapi.co/json/");
-					if (locRes.ok) {
-						const locData = await locRes.json();
-						scrambleText(
-							locEl,
-							`${locData.city}, ${locData.country_name}`.toUpperCase(),
-						);
-					} else {
-						locEl.textContent = "UNKNOWN";
-					}
-				} catch (e) {
-					console.error("Identity Scan failed:", e);
+				if (ipResult.status === "fulfilled" && ipResult.value) {
+					scrambleText(ipEl, ipResult.value.ip);
+				} else {
 					ipEl.textContent = "OFFLINE";
-					locEl.textContent = "UNKNOWN ORIGIN";
+				}
+
+				if (locResult.status === "fulfilled" && locResult.value) {
+					scrambleText(locEl, `${locResult.value.city}, ${locResult.value.country_name}`.toUpperCase());
+				} else {
+					locEl.textContent = "UNKNOWN";
 				}
 			}
 
-			// Continuous Latency Ping - Fetch Head Only
+			// Latency measurement - Less frequent
+			let latencyInterval;
 			async function measureLatency() {
 				const latEl = document.getElementById("latency-val");
 				if (!latEl) return;
 
 				const start = performance.now();
 				try {
-					// Ping local server/CDN edge
-					await fetch("/", { method: "HEAD", cache: "no-store" });
-					const end = performance.now();
-					const latency = Math.round(end - start);
+					await fetch("/favicon.svg", { method: "HEAD", cache: "no-store" });
+					const latency = Math.round(performance.now() - start);
 					latEl.textContent = `${latency}ms`;
 				} catch (e) {
 					latEl.textContent = "--ms";
 				}
 			}
 
-			// Initial execution
-			setTimeout(initSystemData, 1000);
-
-			// Latency loop
-			measureLatency(); // Run once immediately
-			setInterval(measureLatency, 3000); // Update every 3 seconds
-
-			// Life Timer Logic (Decimal Years)
-			const birthDate = new Date("2003-10-15T00:00:00");
-			const timerElement = document.getElementById("life-timer");
-
-			function updateLifeTimer() {
-				const now = new Date();
-				const diff = now.getTime() - birthDate.getTime();
-				const years = diff / (1000 * 60 * 60 * 24 * 365.25);
-
-				if (timerElement) {
-					timerElement.innerText = years.toFixed(9);
-				}
-				requestAnimationFrame(updateLifeTimer);
-			}
-
-			updateLifeTimer();
-
-			// Snow Script (Preserved)
+			// Snow - Optimized with CSS-only animation, reduced frequency
 			const snowContainer = document.getElementById("snow-container");
+			let snowInterval;
+			
 			function createSnowflake() {
-				if (!snowContainer) return;
+				if (!snowContainer || snowContainer.children.length > 40) return; // Cap max snowflakes
 				const snowflake = document.createElement("div");
-				snowflake.innerHTML = "❄";
-				snowflake.classList.add("snowflake");
-				snowflake.style.left = Math.random() * 100 + "vw";
-				snowflake.style.fontSize = Math.random() * 0.6 + 0.8 + "em";
-				snowflake.style.opacity = Math.random() * 0.4 + 0.4;
-				snowflake.style.animationDuration = Math.random() * 5 + 3 + "s";
+				snowflake.textContent = "❄";
+				snowflake.className = "snowflake";
+				snowflake.style.cssText = `left:${Math.random() * 100}vw;font-size:${Math.random() * 0.6 + 0.8}em;opacity:${Math.random() * 0.4 + 0.4};animation-duration:${Math.random() * 5 + 5}s`;
 				snowContainer.appendChild(snowflake);
-				setTimeout(() => snowflake.remove(), 8000);
+				setTimeout(() => snowflake.remove(), 10000);
 			}
-			setInterval(createSnowflake, 200);
-			for (let i = 0; i < 30; i++)
-				setTimeout(createSnowflake, Math.random() * 1000);
+
+			// Defer all non-critical scripts
+			runWhenIdle(() => {
+				// Start system data fetch after 1.5s
+				setTimeout(initSystemData, 1500);
+				
+				// Start latency after 2s, then every 5s
+				setTimeout(() => {
+					measureLatency();
+					latencyInterval = setInterval(measureLatency, 5000);
+				}, 2000);
+				
+				// Snow: Start with fewer, create less frequently
+				for (let i = 0; i < 15; i++) {
+					setTimeout(createSnowflake, Math.random() * 2000);
+				}
+				snowInterval = setInterval(createSnowflake, 400);
+			});
+
+			// Pause expensive operations when tab is hidden
+			document.addEventListener("visibilitychange", () => {
+				if (document.hidden) {
+					clearInterval(latencyInterval);
+					clearInterval(snowInterval);
+				} else {
+					latencyInterval = setInterval(measureLatency, 5000);
+					snowInterval = setInterval(createSnowflake, 400);
+				}
+			});
 		</script>
 
 		<style>

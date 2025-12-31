@@ -1,514 +1,885 @@
 ---
-// Globe Analytics Component
-// Hacker-style 3D globe with glowing spikes and detailed hover stats
+// Globe Analytics - Figma-level Minimal Design
 ---
 
 <section class="globe-section animate delay-4">
-    <div class="globe-wrapper">
-        <div id="globe-container"></div>
+    <h2>visitors</h2>
+    
+    <!-- Stats - Minimal inline -->
+    <div class="stats-row">
+        <div class="stat">
+            <span id="stat-visits" class="stat-num">--</span>
+            <span class="stat-text">visits</span>
+        </div>
+        <div class="stat">
+            <span id="stat-locations" class="stat-num">--</span>
+            <span class="stat-text">cities</span>
+        </div>
+        <div class="stat">
+            <span id="stat-countries" class="stat-num">--</span>
+            <span class="stat-text">countries</span>
+        </div>
+        <div class="stat live">
+            <span class="live-dot"></span>
+            <span id="stat-live" class="stat-num">0</span>
+            <span class="stat-text">live</span>
+        </div>
     </div>
 
-    <!-- Stats Display -->
-    <div class="globe-stats">
-        <div class="stat-item">
-            <span id="stat-visits" class="stat-value">--</span>
-            <span class="stat-label">visits</span>
+    <!-- Globe -->
+    <div class="globe-container">
+        <div id="globe-canvas">
+            <div class="loader-wrap">
+                <div class="loader-dot"></div>
+            </div>
         </div>
-        <span class="stat-sep">•</span>
-        <div class="stat-item">
-            <span id="stat-locations" class="stat-value">--</span>
-            <span class="stat-label">locations</span>
+    </div>
+
+    <!-- Recent Activity - Inline minimal -->
+    <div class="inline-section activity-section">
+        <div class="inline-label"><span class="label-icon">◉</span> Recent Activity</div>
+        <div class="inline-row" id="activity-list">
+            <span class="inline-empty">Waiting for visitors...</span>
         </div>
-        <span class="stat-sep">•</span>
-        <div class="stat-item">
-            <span id="stat-countries" class="stat-value">--</span>
-            <span class="stat-label">countries</span>
+    </div>
+
+    <!-- Top Countries - Inline minimal -->
+    <div class="inline-section countries-section">
+        <div class="inline-label"><span class="label-icon">◈</span> Top Countries</div>
+        <div class="inline-row" id="countries-list">
+            <span class="inline-empty">Loading...</span>
         </div>
     </div>
 </section>
 
-<style>
+<style is:global>
     .globe-section {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 0;
-        position: relative;
+        margin-bottom: 3rem;
     }
 
-    .globe-wrapper {
-        position: relative;
-        width: 100%;
-        max-width: 700px;
-        aspect-ratio: 1 / 1;
+    .globe-section h2 {
+        font-size: 0.95rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--text-muted);
+        font-weight: 700;
+        margin-bottom: 2rem;
         display: flex;
         align-items: center;
-        justify-content: center;
+        gap: 1rem;
     }
 
-    /* Soft glow ring behind globe */
-    .globe-wrapper::before {
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 85%;
-        height: 85%;
-        border-radius: 50%;
-        background: radial-gradient(
-            circle,
-            rgba(251, 207, 232, 0.4) 0%,
-            rgba(253, 242, 248, 0.2) 40%,
-            transparent 70%
-        );
-        filter: blur(30px);
-        z-index: 0;
-        animation: glowPulse 4s ease-in-out infinite alternate;
+    .globe-section h2::after {
+        content: '';
+        height: 1px;
+        flex: 1;
+        background: linear-gradient(to right, var(--border), transparent);
     }
 
-    @keyframes glowPulse {
-        0% {
-            opacity: 0.6;
-            transform: translate(-50%, -50%) scale(0.95);
-        }
-        100% {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1.05);
-        }
-    }
-
-    #globe-container {
-        width: 100%;
-        height: 100%;
-        position: relative;
-        z-index: 1;
-        opacity: 0;
-        animation: globeFadeIn 1.2s ease-out 0.3s forwards;
-    }
-
-    @keyframes globeFadeIn {
-        from {
-            opacity: 0;
-            transform: scale(0.9);
-        }
-        to {
-            opacity: 1;
-            transform: scale(1);
-        }
-    }
-
-    .globe-stats {
+    /* Stats Row - Ultra minimal */
+    .stats-row {
         display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
-        margin-top: 0.5rem;
-        font-family: "Space Grotesk", monospace;
-        font-size: 0.85rem;
-        color: var(--text-muted, #666);
-        opacity: 0.8;
+        gap: 3rem;
+        margin-bottom: 3rem;
+        flex-wrap: wrap;
     }
 
-    .stat-item {
+    .stat {
         display: flex;
         align-items: baseline;
-        gap: 0.3rem;
+        gap: 0.5rem;
     }
 
-    .stat-value {
+    .stat.live {
+        position: relative;
+        padding-left: 1rem;
+    }
+
+    .live-dot {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 6px;
+        height: 6px;
+        background: #22c55e;
+        border-radius: 50%;
+        animation: livePulse 2s ease-in-out infinite;
+    }
+
+    @keyframes livePulse {
+        0%, 100% {
+            opacity: 1;
+            box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
+        }
+        50% {
+            opacity: 0.7;
+            box-shadow: 0 0 0 4px rgba(34, 197, 94, 0);
+        }
+    }
+
+    .stat-num {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 2rem;
         font-weight: 600;
-        color: var(--text, #1a1a1a);
+        color: var(--text);
+        line-height: 1;
         font-variant-numeric: tabular-nums;
     }
 
-    .stat-label {
-        font-weight: 400;
-        text-transform: lowercase;
+    .stat.live .stat-num {
+        color: #22c55e;
     }
 
-    .stat-sep {
-        color: var(--accent-red, #dc2626);
-        opacity: 0.6;
+    .stat-text {
+        font-size: 0.9rem;
+        color: var(--text-muted);
     }
 
-    /* Custom tooltip styling - Pinky theme */
-    :global(.scene-tooltip) {
-        font-family: "Space Grotesk", monospace !important;
-        background: rgba(253, 242, 248, 0.95) !important;
-        color: #be185d !important;
-        padding: 12px 16px !important;
-        border-radius: 12px !important;
-        border: 1px solid rgba(236, 72, 153, 0.3) !important;
-        font-size: 13px !important;
-        line-height: 1.5 !important;
-        box-shadow: 0 4px 24px rgba(236, 72, 153, 0.2) !important;
-        backdrop-filter: blur(12px) !important;
-        max-width: 280px !important;
+    /* Globe */
+    .globe-container {
+        width: 100%;
+        max-width: 650px;
+        margin: 0 auto 3rem;
+        aspect-ratio: 1;
+    }
+
+    #globe-canvas {
+        width: 100%;
+        height: 100%;
+    }
+
+    .loader-wrap {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .loader-dot {
+        width: 8px;
+        height: 8px;
+        background: var(--text-muted);
+        border-radius: 50%;
+        animation: loaderPulse 1.2s ease-in-out infinite;
+    }
+
+    @keyframes loaderPulse {
+        0%, 100% { opacity: 0.3; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.5); }
+    }
+
+    #globe-canvas.loaded .loader-wrap {
+        display: none;
+    }
+
+    /* Inline Sections - Refined with glass effect */
+    .inline-section {
+        margin-bottom: 2rem;
+        padding: 1.25rem 1.5rem;
+        border-radius: 16px;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.3));
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+    }
+
+    .activity-section {
+        border-left: 3px solid #22c55e;
+    }
+
+    .countries-section {
+        border-left: 3px solid var(--accent-red);
+    }
+
+    .inline-label {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--text-muted);
+        font-weight: 700;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .label-icon {
+        font-size: 0.6rem;
+        opacity: 0.5;
+    }
+
+    .activity-section .label-icon {
+        color: #22c55e;
+        opacity: 1;
+    }
+
+    .countries-section .label-icon {
+        color: var(--accent-red);
+        opacity: 1;
+    }
+
+    .inline-label::after {
+        content: '';
+        height: 1px;
+        flex: 1;
+        background: linear-gradient(to right, var(--border), transparent 50%);
+    }
+
+    .inline-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0;
+        align-items: center;
+    }
+
+    .inline-empty {
+        color: var(--text-faint);
+        font-size: 0.9rem;
+        font-style: italic;
+    }
+
+    /* Activity Items - Clean with separators */
+    .activity-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.4rem 0;
+        position: relative;
+        transition: all 0.2s ease;
+        animation: fadeSlideIn 0.4s ease-out backwards;
+    }
+
+    .activity-item:nth-child(1) { animation-delay: 0s; }
+    .activity-item:nth-child(2) { animation-delay: 0.05s; }
+    .activity-item:nth-child(3) { animation-delay: 0.1s; }
+    .activity-item:nth-child(4) { animation-delay: 0.15s; }
+    .activity-item:nth-child(5) { animation-delay: 0.2s; }
+
+    @keyframes fadeSlideIn {
+        from {
+            opacity: 0;
+            transform: translateY(8px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .activity-item:not(:last-child)::after {
+        content: '·';
+        color: var(--text-faint);
+        margin: 0 1rem;
+        font-size: 1.4rem;
+        opacity: 0.3;
+        font-weight: 300;
+    }
+
+    .activity-item:hover {
+        opacity: 0.7;
+    }
+
+    .activity-city {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--text);
+        letter-spacing: -0.01em;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+    }
+
+    .activity-flag {
+        font-size: 0.9rem;
+        line-height: 1;
+    }
+
+    .activity-sub {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+    }
+
+    .activity-time {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        font-family: 'Space Grotesk', monospace;
+        background: rgba(0, 0, 0, 0.04);
+        padding: 0.25rem 0.6rem;
+        border-radius: 6px;
+        font-weight: 500;
+    }
+
+    .activity-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #22c55e;
+        display: inline-block;
+        flex-shrink: 0;
+        box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+        animation: pulseDot 2s ease-out infinite;
+    }
+
+    .activity-dot.dot-soon {
+        background: #f97316;
+        box-shadow: 0 0 8px rgba(249, 115, 22, 0.5);
+        animation: pulseDotOrange 2s ease-out infinite;
+    }
+
+    .activity-dot.dot-old {
+        background: var(--text-faint);
+        box-shadow: none;
+        animation: none;
+        opacity: 0.4;
+    }
+
+    @keyframes pulseDot {
+        0%, 100% { 
+            box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+            transform: scale(1);
+        }
+        50% { 
+            box-shadow: 0 0 12px rgba(34, 197, 94, 0.8);
+            transform: scale(1.2);
+        }
+    }
+
+    @keyframes pulseDotOrange {
+        0%, 100% { 
+            box-shadow: 0 0 8px rgba(249, 115, 22, 0.5);
+            transform: scale(1);
+        }
+        50% { 
+            box-shadow: 0 0 12px rgba(249, 115, 22, 0.8);
+            transform: scale(1.2);
+        }
+    }
+
+    /* Country Items - Big numbers like stats */
+    .country-item {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 0.4rem;
+        padding: 0.3rem 0;
+        transition: all 0.2s ease;
+        animation: fadeSlideIn 0.4s ease-out backwards;
+    }
+
+    .country-item:nth-child(1) { animation-delay: 0s; }
+    .country-item:nth-child(2) { animation-delay: 0.05s; }
+    .country-item:nth-child(3) { animation-delay: 0.1s; }
+    .country-item:nth-child(4) { animation-delay: 0.15s; }
+    .country-item:nth-child(5) { animation-delay: 0.2s; }
+
+    .country-item:not(:last-child)::after {
+        content: '';
+        width: 1px;
+        height: 1.2rem;
+        background: linear-gradient(to bottom, transparent, var(--border), transparent);
+        margin: 0 1.3rem;
+        align-self: center;
+    }
+
+    .country-item:hover {
+        opacity: 0.7;
+    }
+
+    .country-count {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: var(--text);
+        line-height: 1;
+        font-variant-numeric: tabular-nums;
+        letter-spacing: -0.02em;
+    }
+
+    .country-item:first-child .country-count {
+        color: var(--accent-red);
+    }
+
+    .country-label {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        font-weight: 500;
     }
 
     @media (max-width: 768px) {
-        .globe-wrapper {
+        .inline-section {
+            padding: 1rem 1.25rem;
+            border-radius: 12px;
+        }
+
+        .inline-row {
+            gap: 0;
+        }
+
+        .activity-item:not(:last-child)::after {
+            margin: 0 0.6rem;
+            font-size: 1.2rem;
+        }
+
+        .country-item:not(:last-child)::after {
+            margin: 0 0.8rem;
+        }
+
+        .country-count {
+            font-size: 1.4rem;
+        }
+
+        .activity-city {
+            font-size: 0.9rem;
+        }
+
+        .activity-time {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .inline-section {
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .inline-row {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0;
+        }
+
+        .activity-item:not(:last-child)::after,
+        .country-item:not(:last-child)::after {
+            display: none;
+        }
+
+        .activity-item,
+        .country-item {
+            width: 100%;
+            justify-content: space-between;
+            padding: 0.65rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .activity-item:last-child,
+        .country-item:last-child {
+            border-bottom: none;
+        }
+    }
+
+    /* Tooltip - Minimal */
+    :global(.scene-tooltip) {
+        font-family: 'Inter', sans-serif !important;
+        background: rgba(255, 255, 255, 0.98) !important;
+        backdrop-filter: blur(8px) !important;
+        color: var(--text) !important;
+        padding: 8px 10px !important;
+        border-radius: 6px !important;
+        border: none !important;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08) !important;
+        font-size: 13px !important;
+        line-height: 1.4 !important;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+        .analytics-grid {
+            grid-template-columns: 1fr;
+            gap: 2.5rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .stats-row {
+            gap: 2rem;
+        }
+
+        .stat-num {
+            font-size: 1.6rem;
+        }
+
+        .globe-container {
             max-width: 400px;
         }
 
-        .globe-stats {
-            font-size: 0.75rem;
-            flex-wrap: wrap;
+        .analytics-grid {
+            gap: 1.5rem;
+        }
+
+        .analytics-panel {
+            padding: 1.1rem 1.25rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .stats-row {
+            gap: 1.5rem;
+        }
+
+        .stat-num {
+            font-size: 1.4rem;
+        }
+
+        .stat-text {
+            font-size: 0.85rem;
+        }
+
+        .globe-container {
+            max-width: 320px;
+        }
+
+        .activity-item, .country-item {
+            padding: 0.75rem 0.9rem;
+        }
+
+        .activity-city, .country-name {
+            font-size: 0.95rem;
+        }
+
+        .panel-title {
+            font-size: 1rem;
+        }
+
+        .activity-time {
+            font-size: 0.8rem;
         }
     }
 </style>
 
-<!-- Load globe.gl and topojson from CDN -->
-<script is:inline src="//unpkg.com/globe.gl@2.45.0/dist/globe.gl.min.js"
-></script>
-<script
-    is:inline
-    src="//unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js"
-></script>
-
 <script is:inline>
-    document.addEventListener("DOMContentLoaded", function () {
-        const BASE = "https://globe-analytics.alokgupta1560.workers.dev";
-        const WS_URL = "wss://globe-analytics.alokgupta1560.workers.dev/ws";
+(function() {
+    var loaded = false;
+    var live = 0;
+    var activities = [];
+    var countries = {};
+    
+    var countryNames = {
+        "IN": "India", "US": "United States", "GB": "United Kingdom", "CA": "Canada",
+        "AU": "Australia", "DE": "Germany", "FR": "France", "ES": "Spain", "IT": "Italy",
+        "BR": "Brazil", "MX": "Mexico", "AR": "Argentina", "JP": "Japan", "CN": "China",
+        "KR": "South Korea", "SG": "Singapore", "HK": "Hong Kong", "TH": "Thailand",
+        "VN": "Vietnam", "ID": "Indonesia", "PH": "Philippines", "MY": "Malaysia",
+        "PK": "Pakistan", "BD": "Bangladesh", "LK": "Sri Lanka", "NP": "Nepal",
+        "AE": "UAE", "SA": "Saudi Arabia", "TR": "Turkey", "EG": "Egypt", "ZA": "South Africa",
+        "NG": "Nigeria", "KE": "Kenya", "GH": "Ghana", "ET": "Ethiopia", "MA": "Morocco",
+        "RU": "Russia", "PL": "Poland", "NL": "Netherlands", "BE": "Belgium", "CH": "Switzerland",
+        "AT": "Austria", "SE": "Sweden", "NO": "Norway", "DK": "Denmark", "FI": "Finland",
+        "IE": "Ireland", "PT": "Portugal", "GR": "Greece", "CZ": "Czech Republic", "RO": "Romania",
+        "NZ": "New Zealand", "IL": "Israel", "CO": "Colombia", "CL": "Chile", "PE": "Peru",
+        "KW": "Kuwait", "QA": "Qatar", "OM": "Oman"
+    };
 
-        // Fire and forget tracking
-        fetch(BASE + "/track").catch(function () {});
+    function getName(code) {
+        return countryNames[code] || code;
+    }
 
-        // Create globe
-        const container = document.getElementById("globe-container");
+    function getFlag(code) {
+        if (!code || code.length !== 2) return '';
+        var codePoints = code.toUpperCase().split('').map(function(c) {
+            return 127397 + c.charCodeAt(0);
+        });
+        return String.fromCodePoint.apply(null, codePoints);
+    }
 
-        if (container && typeof Globe !== "undefined") {
-            // Weight color scale - soft pink to vibrant rose gradient
-            function getColor(count) {
-                const intensity = Math.min(1, count / 10);
-                // Pink gradient: light pink (#f9a8d4) to vibrant rose (#ec4899)
-                const r = Math.round(249 - intensity * 13);
-                const g = Math.round(168 - intensity * 96);
-                const b = Math.round(212 - intensity * 59);
-                return "rgb(" + r + "," + g + "," + b + ")";
-            }
+    function animate(el, target) {
+        if (!el || isNaN(target)) return;
+        var current = 0;
+        var duration = 800;
+        var start = null;
 
-            const globe = Globe()(container)
-                // Clean transparent background
-                .backgroundColor("rgba(0,0,0,0)")
-                // Soft blush atmosphere glow
-                .atmosphereColor("rgba(251, 207, 232, 0.5)")
-                .atmosphereAltitude(0.2)
-                .showAtmosphere(true)
-                // Globe material - soft pink tint for base
-                .globeImageUrl(
-                    "//unpkg.com/three-globe/example/img/earth-blue-marble.jpg",
-                )
-                .showGlobe(false)
-                // Polygon layer for countries - soft blush pink
-                .polygonCapColor(function () {
-                    return "rgba(244, 114, 182, 0.65)";
-                })
-                .polygonSideColor(function () {
-                    return "rgba(251, 207, 232, 0.4)";
-                })
-                .polygonStrokeColor(function () {
-                    return "rgba(253, 242, 248, 0.8)";
-                })
-                .polygonAltitude(0.005)
-                .polygonsTransitionDuration(400)
-                // Hex layer for subtle geometric mesh
-                .hexPolygonResolution(3)
-                .hexPolygonMargin(0.7)
-                .hexPolygonColor(function () {
-                    return "rgba(253, 242, 248, 0.08)";
-                })
-                .hexPolygonAltitude(0.001)
-                // Rings layer for ripple effect
-                .ringLat(function (d) {
-                    return d.lat;
-                })
-                .ringLng(function (d) {
-                    return d.lng;
-                })
-                .ringColor(function () {
-                    return function (t) {
-                        return "rgba(236, 72, 153, " + (1 - t) * 0.8 + ")";
-                    };
-                })
-                .ringMaxRadius(5)
-                .ringPropagationSpeed(2)
-                .ringRepeatPeriod(800)
-                .ringAltitude(0.008) // Higher than polygons (0.005)
-                .ringsData([])
-                // Points layer (visitor dots)
-                .pointLat(function (d) {
-                    return d.lat;
-                })
-                .pointLng(function (d) {
-                    return d.lng;
-                })
-                .pointRadius(function (d) {
-                    return d.radius || 0.3;
-                })
-                .pointAltitude(function (d) {
-                    return d.altitude || 0.01;
-                })
-                .pointColor(function (d) {
-                    return d.color;
-                })
-                .pointLabel(function (d) {
-                    return d.tooltipHtml;
-                })
-                .pointsData([]);
+        function step(ts) {
+            if (!start) start = ts;
+            var progress = Math.min((ts - start) / duration, 1);
+            current = Math.floor(progress * target);
+            el.textContent = current.toLocaleString();
+            if (progress < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+    }
 
-            // Load countries GeoJSON for polygon layer
-            fetch("//unpkg.com/world-atlas@2.0.2/countries-110m.json")
-                .then(function (res) {
-                    return res.json();
-                })
-                .then(function (worldData) {
-                    const countries = topojson.feature(
-                        worldData,
-                        worldData.objects.countries,
-                    ).features;
-                    globe.polygonsData(countries);
-                })
-                .catch(function () {});
+    function timeAgo(ms) {
+        var s = Math.floor((Date.now() - ms) / 1000);
+        if (s < 60) return 'now';
+        if (s < 3600) return Math.floor(s / 60) + 'm';
+        if (s < 86400) return Math.floor(s / 3600) + 'h';
+        return Math.floor(s / 86400) + 'd';
+    }
 
-            // Generate hex grid data covering the globe
-            const hexData = [];
-            for (let lat = -80; lat <= 80; lat += 10) {
-                for (let lng = -180; lng < 180; lng += 10) {
-                    hexData.push({ lat: lat, lng: lng });
-                }
-            }
-            globe.hexPolygonsData(hexData);
+    function updateActivity() {
+        var list = document.getElementById('activity-list');
+        if (!list) return;
 
-            // Globe controls
-            globe.controls().autoRotate = true;
-            globe.controls().autoRotateSpeed = 0.3;
-            globe.controls().enableZoom = false;
+        if (activities.length === 0) {
+            list.innerHTML = '<span class="inline-empty">Waiting for visitors...</span>';
+            return;
+        }
 
-            // Pause rotation on hover for exploration
-            let targetSpeed = 0.3;
-            container.addEventListener("mouseenter", function () {
-                targetSpeed = 0;
-            });
-            container.addEventListener("mouseleave", function () {
-                targetSpeed = 0.3;
-            });
+        list.innerHTML = activities.slice(0, 5).map(function(a) {
+            var ageMs = Date.now() - a.time;
+            var isLive = ageMs < 90000;
+            var isSoon = ageMs < 300000;
+            var label = timeAgo(a.time);
+            var dotClass = isLive ? '' : (isSoon ? 'dot-soon' : 'dot-old');
+            var flag = getFlag(a.country);
+            return '<div class="activity-item">' +
+                '<span class="activity-city">' + (a.city || 'Unknown') + ' <span class="activity-flag">' + flag + '</span></span>' +
+                '<span class="activity-time">' +
+                    '<span class="activity-dot ' + dotClass + '"></span>' +
+                    label +
+                '</span>' +
+            '</div>';
+        }).join('');
+    }
 
-            // Smooth speed transition
-            setInterval(function () {
-                const currentSpeed = globe.controls().autoRotateSpeed;
-                const diff = targetSpeed - currentSpeed;
-                if (Math.abs(diff) > 0.01) {
-                    globe.controls().autoRotateSpeed =
-                        currentSpeed + diff * 0.1;
-                }
-            }, 50);
+    function updateCountries() {
+        var list = document.getElementById('countries-list');
+        if (!list) return;
 
-            // Responsive resize
-            function resizeGlobe() {
-                const rect = container.getBoundingClientRect();
-                globe.width(rect.width);
-                globe.height(rect.height);
-            }
+        var sorted = Object.entries(countries)
+            .sort(function(a, b) { return b[1] - a[1]; })
+            .slice(0, 5);
 
-            resizeGlobe();
-            window.addEventListener("resize", resizeGlobe);
+        if (sorted.length === 0) {
+            list.innerHTML = '<span class="inline-empty">Loading...</span>';
+            return;
+        }
 
-            // Store points
-            let historicalPoints = [];
-            const livePoints = [];
+        list.innerHTML = sorted.map(function(item) {
+            var flag = getFlag(item[0]);
+            return '<div class="country-item">' +
+                '<span class="country-count">' + item[1] + '</span>' +
+                '<span class="country-label">' + flag + ' ' + getName(item[0]) + '</span>' +
+            '</div>';
+        }).join('');
+    }
 
-            // Generate tooltip HTML with pinky theme
-            function createTooltip(data, isLive) {
-                const status = isLive
-                    ? '<span style="color:#ec4899">● LIVE</span>'
-                    : '<span style="color:#f472b6">● TRACKED</span>';
-                const city = data.city || "Unknown";
-                const country = data.country || "Unknown";
-                const count = data.count || 1;
-                const timestamp = isLive
-                    ? new Date().toISOString()
-                    : "Historical";
+    function setLive(n) {
+        var el = document.getElementById('stat-live');
+        if (el) el.textContent = n;
+    }
 
-                return (
-                    '<div style="text-align:left">' +
-                    '<div style="color:#9ca3af;font-size:10px;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.05em">VISITOR_DATA</div>' +
-                    '<div style="color:#be185d;font-size:14px;font-weight:600">' +
-                    city +
-                    "</div>" +
-                    '<div style="color:#6b7280;font-size:12px;margin-bottom:8px">' +
-                    country +
-                    "</div>" +
-                    '<div style="border-top:1px solid rgba(236,72,153,0.2);padding-top:8px;font-size:11px">' +
-                    '<div style="display:flex;justify-content:space-between;margin-bottom:4px">' +
-                    '<span style="color:#9ca3af">STATUS</span>' +
-                    status +
-                    "</div>" +
-                    '<div style="display:flex;justify-content:space-between;margin-bottom:4px">' +
-                    '<span style="color:#9ca3af">VISITS</span><span style="color:#ec4899">' +
-                    count +
-                    "</span></div>" +
-                    '<div style="display:flex;justify-content:space-between">' +
-                    '<span style="color:#9ca3af">LAT/LNG</span><span style="color:#f472b6">' +
-                    (data.lat ? data.lat.toFixed(2) : "??") +
-                    "°, " +
-                    (data.lng ? data.lng.toFixed(2) : "??") +
-                    "°</span></div>" +
-                    "</div></div>"
-                );
-            }
+    function loadScripts(cb) {
+        if (loaded) return cb();
+        var c = 0;
+        function done() { if (++c === 2) { loaded = true; cb(); } }
+        var s1 = document.createElement('script');
+        s1.src = '//unpkg.com/globe.gl@2.45.0/dist/globe.gl.min.js';
+        s1.async = true;
+        s1.onload = done;
+        document.head.appendChild(s1);
+        var s2 = document.createElement('script');
+        s2.src = '//unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js';
+        s2.async = true;
+        s2.onload = done;
+        document.head.appendChild(s2);
+    }
 
-            // Load historical analytics
-            fetch(BASE + "/analytics")
-                .then(function (res) {
-                    return res.json();
-                })
-                .then(function (data) {
-                    if (!Array.isArray(data)) return;
+    function init() {
+        var API = 'https://globe-analytics.alokgupta1560.workers.dev';
+        var WS = 'wss://globe-analytics.alokgupta1560.workers.dev/ws';
 
-                    historicalPoints = data.map(function (p) {
-                        const count = p.count || 1;
-                        // Taller spikes for more visits
-                        const altitude = Math.min(0.5, 0.02 + count * 0.03);
+        fetch(API + '/track').catch(function(){});
 
-                        return {
-                            lat: Number(p.lat),
-                            lng: Number(p.lng),
-                            radius: Math.min(0.6, 0.15 + count * 0.05),
-                            altitude: altitude,
-                            color: getColor(count),
-                            city: p.city,
-                            country: p.country,
-                            count: count,
-                            tooltipHtml: createTooltip(
-                                {
-                                    lat: Number(p.lat),
-                                    lng: Number(p.lng),
-                                    city: p.city,
-                                    country: p.country,
-                                    count: count,
-                                },
-                                false,
-                            ),
-                        };
-                    });
+        var canvas = document.getElementById('globe-canvas');
+        if (!canvas || typeof Globe === 'undefined') return;
 
-                    globe.pointsData(historicalPoints);
+        canvas.classList.add('loaded');
 
-                    // Set rings data for ripple effect
-                    const ringsData = historicalPoints.map(function (p) {
-                        return { lat: p.lat, lng: p.lng };
-                    });
-                    globe.ringsData(ringsData);
-                })
-                .catch(function () {});
+        function color(c) {
+            var i = Math.min(1, c / 15);
+            return 'rgba(' + Math.round(200 - i * 50) + ',' + Math.round(100 - i * 50) + ',' + Math.round(130 - i * 50) + ',0.8)';
+        }
 
-            // Fetch and display stats
-            fetch(BASE + "/stats")
-                .then(function (res) {
-                    return res.json();
-                })
-                .then(function (stats) {
-                    const visitsEl = document.getElementById("stat-visits");
-                    const locationsEl =
-                        document.getElementById("stat-locations");
-                    const countriesEl =
-                        document.getElementById("stat-countries");
+        var globe = Globe()(canvas)
+            .backgroundColor('rgba(0,0,0,0)')
+            .atmosphereColor('rgba(160,140,150,0.2)')
+            .atmosphereAltitude(0.1)
+            .showAtmosphere(true)
+            .showGlobe(false)
+            .polygonCapColor(function() { return 'rgba(150,130,140,0.4)'; })
+            .polygonSideColor(function() { return 'rgba(170,150,160,0.2)'; })
+            .polygonStrokeColor(function() { return 'rgba(255,255,255,0.4)'; })
+            .polygonAltitude(0.002)
+            .polygonsTransitionDuration(250)
+            .arcColor(function() { return ['rgba(220,38,38,0.4)', 'rgba(220,38,38,0.05)']; })
+            .arcAltitude(0.08)
+            .arcStroke(0.25)
+            .arcDashLength(0.6)
+            .arcDashGap(0.2)
+            .arcDashAnimateTime(1000)
+            .arcsData([])
+            .ringLat(function(d) { return d.lat; })
+            .ringLng(function(d) { return d.lng; })
+            .ringColor(function() { return function(t) { return 'rgba(220,38,38,' + (1-t)*0.3 + ')'; }; })
+            .ringMaxRadius(2.5)
+            .ringPropagationSpeed(1.2)
+            .ringRepeatPeriod(2000)
+            .ringAltitude(0.004)
+            .ringsData([])
+            .pointLat(function(d) { return d.lat; })
+            .pointLng(function(d) { return d.lng; })
+            .pointRadius(function(d) { return d.r; })
+            .pointAltitude(function(d) { return d.a; })
+            .pointColor(function(d) { return d.c; })
+            .pointLabel(function(d) { return d.l; })
+            .pointsData([]);
 
-                    if (visitsEl)
-                        visitsEl.textContent = stats.total_visits || "--";
-                    if (locationsEl)
-                        locationsEl.textContent =
-                            stats.unique_locations || "--";
-                    if (countriesEl)
-                        countriesEl.textContent = stats.countries || "--";
-                })
-                .catch(function () {});
+        fetch('//unpkg.com/world-atlas@2.0.2/countries-110m.json')
+            .then(function(r) { return r.json(); })
+            .then(function(d) {
+                globe.polygonsData(topojson.feature(d, d.objects.countries).features);
+            }).catch(function(){});
 
-            // Live visitors via WebSocket
-            try {
-                const ws = new WebSocket(WS_URL);
+        globe.controls().autoRotate = true;
+        globe.controls().autoRotateSpeed = 0.35;
+        globe.controls().enableZoom = false;
 
-                ws.onmessage = function (e) {
-                    try {
-                        const d = JSON.parse(e.data);
-                        const lat = Number(d.lat);
-                        const lng = Number(d.lng);
+        var speed = 0.35;
+        canvas.addEventListener('mouseenter', function() { speed = 0; });
+        canvas.addEventListener('mouseleave', function() { speed = 0.35; });
+        setInterval(function() {
+            var curr = globe.controls().autoRotateSpeed;
+            var diff = speed - curr;
+            if (Math.abs(diff) > 0.01) globe.controls().autoRotateSpeed = curr + diff * 0.08;
+        }, 50);
 
-                        if (!Number.isFinite(lat) || !Number.isFinite(lng))
-                            return;
+        function resize() {
+            var rect = canvas.getBoundingClientRect();
+            globe.width(rect.width).height(rect.height);
+        }
+        resize();
+        window.addEventListener('resize', resize);
 
-                        livePoints.push({
-                            lat: lat,
-                            lng: lng,
-                            createdAt: Date.now(),
-                            radius: 0.5,
-                            altitude: 0.15,
-                            color: "#ec4899",
-                            city: d.city,
-                            country: d.country,
-                            count: 1,
-                            tooltipHtml: createTooltip(
-                                {
-                                    lat: lat,
-                                    lng: lng,
-                                    city: d.city,
-                                    country: d.country,
-                                    count: 1,
-                                },
-                                true,
-                            ),
-                        });
+        var pts = [];
+        var livePts = [];
+        var arcs = [];
+        var myLat = 23.34, myLng = 85.31;
 
-                        // Update rings to include new live point
-                        const allPoints = historicalPoints.concat(livePoints);
-                        const ringsData = allPoints.map(function (p) {
-                            return { lat: p.lat, lng: p.lng };
-                        });
-                        globe.ringsData(ringsData);
-                    } catch (err) {}
-                };
+        function label(d, isLive) {
+            return '<div style="line-height:1.5">' +
+                '<div style="font-weight:600;margin-bottom:2px">' + (d.city || 'Unknown') + '</div>' +
+                '<div style="color:#666;font-size:12px;margin-bottom:4px">' + getName(d.country) + '</div>' +
+                '<div style="color:#999;font-size:11px;padding-top:4px;border-top:1px solid #eee">' +
+                (isLive ? '<span style="color:#22c55e">● Live</span>' : d.count + ' visits') +
+                '</div></div>';
+        }
 
-                ws.onerror = function () {};
-            } catch (err) {}
+        fetch(API + '/analytics')
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                if (!Array.isArray(data)) return;
 
-            // Animate live pulses - elegant breathing effect
-            setInterval(function () {
-                const now = Date.now();
-                let pointsChanged = false;
-
-                // Remove old pulses (after 12 seconds)
-                for (let i = livePoints.length - 1; i >= 0; i--) {
-                    if (now - livePoints[i].createdAt > 12000) {
-                        livePoints.splice(i, 1);
-                        pointsChanged = true;
-                    }
-                }
-
-                if (pointsChanged) {
-                    const allPoints = historicalPoints.concat(livePoints);
-                    const ringsData = allPoints.map(function (p) {
-                        return { lat: p.lat, lng: p.lng };
-                    });
-                    globe.ringsData(ringsData);
-                }
-
-                // Elegant breathing pulse for live points
-                livePoints.forEach(function (point) {
-                    const age = now - point.createdAt;
-                    // Smooth sine wave for gentle pulsing
-                    const breathe = Math.sin(age / 400) * 0.5 + 0.5;
-                    // Fade out as point ages
-                    const fadeOut = Math.max(0, 1 - age / 12000);
-                    point.radius = 0.3 + breathe * 0.4 * fadeOut;
-                    point.altitude = 0.08 + breathe * 0.08 * fadeOut;
+                data.forEach(function(p) {
+                    if (p.country) countries[p.country] = (countries[p.country] || 0) + (p.count || 1);
+                    if (p.city) activities.push({ city: p.city, country: p.country, time: Date.now() - Math.random() * 3600000 });
                 });
 
-                const allPoints = historicalPoints.concat(livePoints);
-                globe.pointsData(allPoints);
-            }, 60);
-        }
-    });
+                activities.sort(function(a, b) { return b.time - a.time; });
+                activities = activities.slice(0, 5);
+                updateActivity();
+                updateCountries();
+
+                pts = data.map(function(p) {
+                    var cnt = p.count || 1;
+                    return {
+                        lat: Number(p.lat), lng: Number(p.lng),
+                        r: Math.min(0.35, 0.08 + cnt * 0.025),
+                        a: Math.min(0.25, 0.008 + cnt * 0.018),
+                        c: color(cnt),
+                        l: label(p, false),
+                        count: cnt
+                    };
+                });
+
+                globe.pointsData(pts);
+                globe.ringsData(pts.slice(0, 10).map(function(p) { return {lat: p.lat, lng: p.lng}; }));
+            }).catch(function(){});
+
+        fetch(API + '/stats')
+            .then(function(r) { return r.json(); })
+            .then(function(s) {
+                animate(document.getElementById('stat-visits'), s.total_visits || 0);
+                animate(document.getElementById('stat-locations'), s.unique_locations || 0);
+                animate(document.getElementById('stat-countries'), s.countries || 0);
+            }).catch(function(){});
+
+        try {
+            var ws = new WebSocket(WS);
+
+            ws.onmessage = function(e) {
+                try {
+                    var d = JSON.parse(e.data);
+                    var lat = Number(d.lat), lng = Number(d.lng);
+                    if (!isFinite(lat) || !isFinite(lng)) return;
+
+                    live++;
+                    setLive(live);
+
+                    activities.unshift({ city: d.city, country: d.country, time: Date.now() });
+                    activities = activities.slice(0, 5);
+                    updateActivity();
+
+                    if (d.country) {
+                        countries[d.country] = (countries[d.country] || 0) + 1;
+                        updateCountries();
+                    }
+
+                    arcs.push({ startLat: lat, startLng: lng, endLat: myLat, endLng: myLng, ts: Date.now() });
+                    globe.arcsData(arcs);
+
+                    livePts.push({
+                        lat: lat, lng: lng, ts: Date.now(),
+                        r: 0.3, a: 0.1, c: '#22c55e',
+                        l: label({city: d.city, country: d.country}, true)
+                    });
+
+                    globe.ringsData([...globe.ringsData(), {lat: lat, lng: lng}]);
+                } catch(err) {}
+            };
+
+            ws.onclose = function() {
+                live = Math.max(0, live - 1);
+                setLive(live);
+            };
+        } catch(err) {}
+
+        setInterval(function() {
+            var now = Date.now();
+            for (var i = arcs.length - 1; i >= 0; i--) {
+                if (now - arcs[i].ts > 2000) arcs.splice(i, 1);
+            }
+            globe.arcsData(arcs);
+
+            for (var j = livePts.length - 1; j >= 0; j--) {
+                if (now - livePts[j].ts > 9000) livePts.splice(j, 1);
+            }
+
+            livePts.forEach(function(p) {
+                var age = now - p.ts;
+                var pulse = Math.sin(age / 200) * 0.5 + 0.5;
+                var fade = Math.max(0, 1 - age / 9000);
+                p.r = 0.2 + pulse * 0.2 * fade;
+                p.a = 0.05 + pulse * 0.05 * fade;
+            });
+
+            globe.pointsData(pts.concat(livePts));
+        }, 60);
+
+        setInterval(updateActivity, 30000);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() { loadScripts(init); });
+    } else {
+        loadScripts(init);
+    }
+})();
 </script>

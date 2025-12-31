@@ -31,6 +31,35 @@ const { title, description, image = FallbackImage } = Astro.props;
 <meta name="generator" content={Astro.generator} />
 <meta name="author" content="Alok Gupta" />
 
+<!-- DNS Prefetch & Preconnect for external resources -->
+<link rel="dns-prefetch" href="//fonts.googleapis.com" />
+<link rel="dns-prefetch" href="//fonts.gstatic.com" />
+<link rel="dns-prefetch" href="//unpkg.com" />
+<link rel="dns-prefetch" href="//api.ipify.org" />
+<link rel="dns-prefetch" href="//ipapi.co" />
+<link rel="dns-prefetch" href="//github-contributions-api.jogruber.de" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+<!-- Google Fonts with font-display: swap for faster rendering -->
+<link
+	rel="preload"
+	as="style"
+	href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+/>
+<link
+	rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+	media="print"
+	onload="this.media='all'"
+/>
+<noscript>
+	<link
+		rel="stylesheet"
+		href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+	/>
+</noscript>
+
 <!-- Font preloads -->
 <link
 	rel="preload"
