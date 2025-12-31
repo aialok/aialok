@@ -5,6 +5,12 @@
 <section class="globe-section animate delay-4">
     <h2>visitors</h2>
     
+    <!-- Greeting Banner -->
+    <div class="visitor-welcome" id="visitor-welcome">
+        <span class="welcome-emoji">👋</span>
+        <span class="welcome-text">Hey there, welcome! <strong id="visitor-city"></strong></span>
+    </div>
+
     <!-- Stats - Minimal inline -->
     <div class="stats-row">
         <div class="stat">
@@ -26,18 +32,32 @@
         </div>
     </div>
 
-    <!-- Globe -->
-    <div class="globe-container">
-        <div id="globe-canvas">
-            <div class="loader-wrap">
-                <div class="loader-dot"></div>
+    <!-- Globe with Effects -->
+    <div class="globe-universe">
+        <div class="globe-aurora"></div>
+        <div class="globe-particles" id="globe-particles"></div>
+        <div class="globe-container">
+            <div id="globe-canvas">
+                <div class="loader-wrap">
+                    <div class="loader-dot"></div>
+                </div>
             </div>
         </div>
+        <div class="globe-ticker" id="globe-ticker">
+            <span class="ticker-dot"></span>
+            <span class="ticker-text" id="ticker-text">Watching the world...</span>
+        </div>
     </div>
+    
+    <!-- Confetti Container -->
+    <div class="confetti-box" id="confetti-box"></div>
 
     <!-- Recent Activity - Inline minimal -->
     <div class="inline-section activity-section">
-        <div class="inline-label"><span class="label-icon">◉</span> Recent Activity</div>
+        <div class="inline-label">
+            <span class="label-icon">◉</span> Recent Activity
+            <span class="live-badge" id="live-badge"></span>
+        </div>
         <div class="inline-row" id="activity-list">
             <span class="inline-empty">Waiting for visitors...</span>
         </div>
@@ -45,7 +65,10 @@
 
     <!-- Top Countries - Inline minimal -->
     <div class="inline-section countries-section">
-        <div class="inline-label"><span class="label-icon">◈</span> Top Countries</div>
+        <div class="inline-label">
+            <span class="label-icon">◈</span> Top Countries
+            <span class="total-badge" id="total-countries-badge"></span>
+        </div>
         <div class="inline-row" id="countries-list">
             <span class="inline-empty">Loading...</span>
         </div>
@@ -74,6 +97,154 @@
         height: 1px;
         flex: 1;
         background: linear-gradient(to right, var(--border), transparent);
+    }
+
+    /* Welcome Banner */
+    .visitor-welcome {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.6rem 1.2rem;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6));
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        border-radius: 50px;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+        backdrop-filter: blur(12px);
+        opacity: 0;
+        transform: translateY(-10px);
+        animation: welcomeIn 0.6s ease-out 0.8s forwards;
+    }
+
+    @keyframes welcomeIn {
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .welcome-emoji {
+        font-size: 1.2rem;
+        animation: waveHand 2s ease-in-out infinite;
+    }
+
+    @keyframes waveHand {
+        0%, 100% { transform: rotate(0deg); }
+        15% { transform: rotate(14deg); }
+        30% { transform: rotate(-8deg); }
+        45% { transform: rotate(14deg); }
+        60% { transform: rotate(-4deg); }
+        75%, 100% { transform: rotate(0deg); }
+    }
+
+    .welcome-text {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+    }
+
+    .welcome-text strong {
+        color: var(--text);
+        font-weight: 600;
+    }
+
+    /* Globe Universe */
+    .globe-universe {
+        position: relative;
+        margin-bottom: 3rem;
+    }
+
+    .globe-aurora {
+        position: absolute;
+        inset: -20%;
+        background: conic-gradient(
+            from 0deg at 50% 50%,
+            transparent 0deg,
+            rgba(34, 197, 94, 0.04) 60deg,
+            rgba(59, 130, 246, 0.03) 120deg,
+            rgba(168, 85, 247, 0.03) 180deg,
+            rgba(236, 72, 153, 0.02) 240deg,
+            rgba(34, 197, 94, 0.03) 300deg,
+            transparent 360deg
+        );
+        animation: auroraRotate 40s linear infinite;
+        pointer-events: none;
+        filter: blur(60px);
+        border-radius: 50%;
+    }
+
+    @keyframes auroraRotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+
+    .globe-particles {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+    }
+
+    .particle {
+        position: absolute;
+        width: 3px;
+        height: 3px;
+        background: rgba(220, 38, 38, 0.5);
+        border-radius: 50%;
+        animation: particleFly 6s ease-out infinite;
+    }
+
+    @keyframes particleFly {
+        0% { transform: translateY(0) scale(0); opacity: 0; }
+        10% { opacity: 1; transform: scale(1); }
+        100% { transform: translateY(-150px) scale(0); opacity: 0; }
+    }
+
+    .globe-ticker {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.6rem;
+        margin-top: 1rem;
+        padding: 0.5rem 1rem;
+        background: rgba(0, 0, 0, 0.02);
+        border-radius: 8px;
+    }
+
+    .ticker-dot {
+        width: 6px;
+        height: 6px;
+        background: #22c55e;
+        border-radius: 50%;
+        animation: tickerPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes tickerPulse {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+        50% { box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+    }
+
+    .ticker-text {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        font-weight: 500;
+    }
+
+    /* Confetti */
+    .confetti-box {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 9999;
+        overflow: hidden;
+    }
+
+    .confetti-piece {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        animation: confettiFall 3s ease-out forwards;
+    }
+
+    @keyframes confettiFall {
+        0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+        100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
     }
 
     /* Stats Row - Ultra minimal */
@@ -221,6 +392,47 @@
         opacity: 1;
     }
 
+    .live-badge {
+        font-size: 0.65rem;
+        font-weight: 700;
+        color: #22c55e;
+        background: rgba(34, 197, 94, 0.12);
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+        margin-left: 0.3rem;
+        display: none;
+        align-items: center;
+        gap: 0.3rem;
+    }
+
+    .live-badge.visible {
+        display: inline-flex;
+    }
+
+    .live-badge::before {
+        content: '';
+        width: 5px;
+        height: 5px;
+        background: #22c55e;
+        border-radius: 50%;
+        animation: pulseDot 2s ease-out infinite;
+    }
+
+    .total-badge {
+        font-size: 0.65rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        background: rgba(0, 0, 0, 0.05);
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+        margin-left: 0.3rem;
+        display: none;
+    }
+
+    .total-badge.visible {
+        display: inline-block;
+    }
+
     .inline-label::after {
         content: '';
         height: 1px;
@@ -280,6 +492,10 @@
 
     .activity-item:hover {
         opacity: 0.7;
+    }
+
+    .activity-item:first-child .activity-city {
+        color: #22c55e;
     }
 
     .activity-city {
@@ -389,6 +605,17 @@
 
     .country-item:hover {
         opacity: 0.7;
+    }
+
+    .country-rank {
+        font-size: 0.7rem;
+        color: var(--text-faint);
+        font-weight: 600;
+        min-width: 1.5rem;
+    }
+
+    .country-rank.rank-first {
+        font-size: 0.9rem;
     }
 
     .country-count {
@@ -652,9 +879,19 @@
             return;
         }
 
-        list.innerHTML = sorted.map(function(item) {
+        var totalCountries = Object.keys(countries).length;
+        var badge = document.getElementById('total-countries-badge');
+        if (badge) {
+            badge.textContent = totalCountries + ' total';
+            badge.classList.add('visible');
+        }
+
+        list.innerHTML = sorted.map(function(item, i) {
             var flag = getFlag(item[0]);
+            var rank = i === 0 ? '👑' : '#' + (i + 1);
+            var rankClass = i === 0 ? 'rank-first' : '';
             return '<div class="country-item">' +
+                '<span class="country-rank ' + rankClass + '">' + rank + '</span>' +
                 '<span class="country-count">' + item[1] + '</span>' +
                 '<span class="country-label">' + flag + ' ' + getName(item[0]) + '</span>' +
             '</div>';
@@ -664,6 +901,59 @@
     function setLive(n) {
         var el = document.getElementById('stat-live');
         if (el) el.textContent = n;
+        
+        var badge = document.getElementById('live-badge');
+        if (badge) {
+            if (n > 0) {
+                badge.textContent = n + ' live';
+                badge.classList.add('visible');
+            } else {
+                badge.classList.remove('visible');
+            }
+        }
+    }
+
+    function updateTicker(city, country) {
+        var ticker = document.getElementById('ticker-text');
+        if (!ticker) return;
+        var flag = getFlag(country);
+        var messages = [
+            flag + ' ' + city + ' just landed',
+            'Someone from ' + city + ' ' + flag,
+            flag + ' Hello from ' + city + '!',
+            city + ' ' + flag + ' exploring...'
+        ];
+        ticker.textContent = messages[Math.floor(Math.random() * messages.length)];
+    }
+
+    function spawnConfetti() {
+        var box = document.getElementById('confetti-box');
+        if (!box) return;
+        var colors = ['#22c55e', '#3b82f6', '#f59e0b', '#ec4899', '#8b5cf6'];
+        for (var i = 0; i < 30; i++) {
+            var piece = document.createElement('div');
+            piece.className = 'confetti-piece';
+            piece.style.left = Math.random() * 100 + '%';
+            piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+            piece.style.animationDelay = Math.random() * 0.5 + 's';
+            piece.style.transform = 'rotate(' + Math.random() * 360 + 'deg)';
+            box.appendChild(piece);
+            setTimeout(function(el) { el.remove(); }, 3500, piece);
+        }
+    }
+
+    function createParticles() {
+        var container = document.getElementById('globe-particles');
+        if (!container) return;
+        for (var i = 0; i < 15; i++) {
+            var p = document.createElement('div');
+            p.className = 'particle';
+            p.style.left = Math.random() * 100 + '%';
+            p.style.bottom = Math.random() * 30 + '%';
+            p.style.animationDelay = Math.random() * 6 + 's';
+            p.style.animationDuration = (4 + Math.random() * 4) + 's';
+            container.appendChild(p);
+        }
     }
 
     function loadScripts(cb) {
@@ -811,6 +1101,23 @@
                 animate(document.getElementById('stat-countries'), s.countries || 0);
             }).catch(function(){});
 
+        // Get visitor's location for welcome message
+        fetch('https://ipapi.co/json/')
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                if (data.city) {
+                    var cityEl = document.getElementById('visitor-city');
+                    var welcomeText = document.querySelector('.welcome-text');
+                    if (cityEl && welcomeText) {
+                        var flag = getFlag(data.country_code);
+                        welcomeText.innerHTML = 'Hey, visiting from ' + flag + ' <strong>' + data.city + '</strong>?';
+                    }
+                }
+            }).catch(function(){});
+
+        // Create particles
+        createParticles();
+
         try {
             var ws = new WebSocket(WS);
 
@@ -826,6 +1133,12 @@
                     activities.unshift({ city: d.city, country: d.country, time: Date.now() });
                     activities = activities.slice(0, 5);
                     updateActivity();
+
+                    // Update ticker and spawn confetti on new visitor
+                    if (d.city) {
+                        updateTicker(d.city, d.country);
+                        spawnConfetti();
+                    }
 
                     if (d.country) {
                         countries[d.country] = (countries[d.country] || 0) + 1;
